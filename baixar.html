@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baixar · JockieGuessr</title>
+<meta name="description" content="Baixe o app do host do JockieGuessr para Windows ou Linux e o controle para Android. Quem joga não baixa nada.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,500&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="transition.css">
+<link rel="stylesheet" href="doc.css">
+<link rel="stylesheet" href="baixar.css">
+<meta name="theme-color" content="#14120f">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JockieGuessr">
+<meta property="og:title" content="Baixar · JockieGuessr">
+<script>try{var p=sessionStorage.getItem('pt');if(p){sessionStorage.removeItem('pt');p=JSON.parse(p);document.documentElement.classList.add('pt-in','pt-p-'+p.p,'pt-d-'+p.d)}}catch(e){}</script>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="manual.html">Manual</a>
+    <a href="host.html">Host</a>
+    <a href="novidades.html">Novidades</a>
+  </nav>
+  <a class="btn sm" href="baixar.html"><i data-ic="baixar"></i> Baixar</a>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><i data-ic="menu"></i></button>
+</header>
+
+<main>
+<div class="doc-hero">
+  <p class="kicker"><span class="vinil gira"></span> Baixar · <span data-versao>v1.3.0</span></p>
+  <h1>Leve o disco para <span class="tag-hl">casa</span>.</h1>
+  <p class="lead">Só quem hospeda baixa alguma coisa. Quem joga entra pelo navegador do celular, com o QR code do telão.</p>
+  <p class="detect" id="detect"></p>
+</div>
+
+<div class="wrap">
+  <div class="dl" id="dl">
+    <article class="dl-card" data-arq="JockieGuessr-Host.exe" data-so="win">
+      <span class="dl-tag">Recomendado para você</span>
+      <div class="dl-ico win"><i class="bi" style="--i:url(assets/icons/windows.svg)"></i></div>
+      <h2>App do host · Windows</h2>
+      <p>Dois cliques e pronto: liga o jogo, o som e o túnel, e abre o painel já logado. Portátil, sem instalar.</p>
+      <ul class="dl-req"><li>Windows 10 (2004) ou 11</li><li><code>.exe</code> portátil</li><li>Para jogar à distância: <code>cloudflared</code></li></ul>
+      <div class="dl-meta"></div>
+      <a class="btn dl-btn" href="downloads/JockieGuessr-Host.exe" download data-cursor="baixar"><i data-ic="baixar"></i> Baixar .exe</a>
+    </article>
+    <article class="dl-card" data-arq="JockieGuessr-Host.AppImage" data-so="linux">
+      <span class="dl-tag">Recomendado para você</span>
+      <div class="dl-ico linux"><i class="bi" style="--i:url(assets/icons/linux.svg)"></i></div>
+      <h2>App do host · Linux</h2>
+      <p>O mesmo app, em AppImage: som pelo PipeWire e "agora tocando" pelo MPRIS. Dê <code>chmod +x</code> e dois cliques.</p>
+      <ul class="dl-req"><li>PipeWire</li><li>Spotify do Linux</li><li>Para jogar à distância: <code>cloudflared</code></li></ul>
+      <div class="dl-meta"></div>
+      <a class="btn dl-btn" href="downloads/JockieGuessr-Host.AppImage" download data-cursor="baixar"><i data-ic="baixar"></i> Baixar AppImage</a>
+    </article>
+    <article class="dl-card" data-arq="JockieGuessr-Controle.apk" data-so="android">
+      <span class="dl-tag">Recomendado para você</span>
+      <div class="dl-ico android"><i class="bi" style="--i:url(assets/icons/android.svg)"></i></div>
+      <h2>Controle · Android</h2>
+      <p>O painel do host no celular, em tela cheia, que vibra a cada palpite. Pareia com o QR de uso único do PC.</p>
+      <ul class="dl-req"><li>Android 8 ou mais novo</li><li>APK (fora da Play Store)</li><li>Opcional: o navegador também serve</li></ul>
+      <div class="dl-meta"></div>
+      <a class="btn dl-btn" href="downloads/JockieGuessr-Controle.apk" download data-cursor="baixar"><i data-ic="baixar"></i> Baixar APK</a>
+    </article>
+    <article class="dl-card player">
+      <div class="dl-ico player"><i data-ic="celular"></i></div>
+      <h2>Vai só jogar?</h2>
+      <p>Não precisa baixar nada. Aponte a câmera para o QR code do telão, digite um nome e pronto. Funciona no Android, no iPhone e no PC.</p>
+      <a class="btn ghost dl-btn" href="manual.html#jogar">Como jogar <i data-ic="avancar"></i></a>
+    </article>
+  </div>
+
+  <div class="dl-depois">
+    <section class="card">
+      <div class="ico-box gold"><i data-ic="escudo"></i></div>
+      <h3>"Editor desconhecido"?</h3>
+      <p>O <code>.exe</code> não é assinado (certificado custa caro), então o SmartScreen avisa na primeira vez: <b>Mais informações → Executar assim mesmo</b>.</p>
+    </section>
+    <section class="card">
+      <div class="ico-box"><i data-ic="nuvem"></i></div>
+      <h3>Jogar à distância</h3>
+      <p>O PC precisa do <code>cloudflared</code> para abrir o link público:</p>
+      <div class="cmd"><code>winget install Cloudflare.cloudflared</code><button type="button" data-copy="winget install Cloudflare.cloudflared">copiar</button></div>
+    </section>
+    <section class="card">
+      <div class="ico-box"><i data-ic="vibrar"></i></div>
+      <h3>APK direto do PC</h3>
+      <p>Com o jogo ligado, o celular também baixa o controle em <code>http://&lt;IP do PC&gt;:8790/download/controle.apk</code>. Permita "instalar apps desconhecidos" quando o Android pedir.</p>
+    </section>
+  </div>
+
+  <section class="sha" id="sha">
+    <div class="sec-head"><p class="faixa"><b>SHA</b> Conferir o arquivo</p><h2>Baixou certinho?</h2><p>Compare o SHA-256 do arquivo com o daqui. No Windows: <code>certutil -hashfile JockieGuessr-Host.exe SHA256</code>. No Linux: <code>sha256sum JockieGuessr-Host.AppImage</code>.</p></div>
+    <div class="table-wrap"><table><thead><tr><th>Arquivo</th><th>Versão</th><th>Data</th><th>SHA-256</th></tr></thead><tbody id="shaBody"></tbody></table></div>
+  </section>
+</div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+      <p>Quiz musical com telão, feito pelo Pulzi para jogar com os amigos.</p>
+      <p class="sig">Este site foi feito pelo <span>Claude Code</span>, do jeito dele. ✦</p>
+    </div>
+    <div><h4>Lado A</h4><ul><li><a href="index.html#como">Como funciona</a></li><li><a href="index.html#corretor">Teste o corretor</a></li><li><a href="index.html#especiais">Rodadas especiais</a></li><li><a href="index.html#pontos">Quanto vale</a></li></ul></div>
+    <div><h4>Lado B</h4><ul><li><a href="manual.html">Manual</a></li><li><a href="host.html">Guia do host</a></li><li><a href="novidades.html">Novidades</a></li><li><a href="baixar.html">Baixar</a></li></ul></div>
+    <div><h4>Créditos</h4><ul><li><a href="https://lucide.dev" target="_blank" rel="noopener">Ícones: Lucide</a></li><li><a href="https://simpleicons.org" target="_blank" rel="noopener">Marcas: Simple Icons</a></li><li><a href="https://lrclib.net" target="_blank" rel="noopener">Letras: LRCLIB</a></li><li><a href="https://spicylyrics.org" target="_blank" rel="noopener">Letras: Spicy Lyrics</a></li></ul></div>
+  </div>
+  <div class="foot-bar">JockieGuessr · <span data-versao>v1.3.0</span> · 33⅓ rpm</div>
+</footer>
+
+<script src="downloads-data.js"></script>
+<script src="icones.js"></script>
+<script src="baixar.js"></script>
+<script src="cursor.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>

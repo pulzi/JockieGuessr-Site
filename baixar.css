@@ -1,0 +1,32 @@
+/* Baixar: um card por arquivo; o do seu sistema vem primeiro e destacado */
+.detect { margin: 18px 0 0; font: 700 .86rem var(--mono); color: var(--muted); }
+.detect b { color: var(--accent); }
+.dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 40px; }
+.dl-card { position: relative; display: flex; flex-direction: column; gap: 10px; background: var(--card); border: 2px solid var(--line); border-radius: 12px; padding: 26px; box-shadow: 6px 6px 0 #000; }
+.dl-card h2 { font-size: 1.7rem; }
+.dl-card p { margin: 0; color: #ddd3c3; }
+.dl-ico { width: 64px; height: 64px; border-radius: 12px; display: grid; place-items: center; font-size: 2rem; background: var(--card2); border: 2px solid var(--line); }
+.dl-ico.win { color: #4cc2ff; } .dl-ico.linux { color: #f4ede1; } .dl-ico.android { color: #3ddc84; } .dl-ico.player { color: var(--accent); }
+.dl-req { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.dl-req li { font: 600 .78rem var(--body); color: var(--muted); padding: 4px 9px; border-radius: 6px; border: 1px solid var(--line); }
+.dl-meta { font: 600 .78rem var(--mono); color: var(--dim); display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: auto; padding-top: 8px; }
+.dl-meta b { color: var(--muted); }
+.dl-meta .velha { color: var(--gold); }
+.dl-btn { align-self: flex-start; margin-top: 6px; }
+.dl-tag { display: none; position: absolute; right: 20px; top: 20px; font: 800 .7rem var(--body); letter-spacing: .06em; text-transform: uppercase; color: #2a1d02; background: var(--gold); border: 2px solid #000; padding: 3px 9px; border-radius: 5px; box-shadow: 2px 2px 0 #000; transform: rotate(3deg); }
+.dl-card.seu { grid-column: 1 / -1; border-color: #000; background: radial-gradient(500px 260px at 90% 0%, #ff6b3533, transparent 70%), var(--card); box-shadow: 9px 9px 0 #000; }
+.dl-card.seu h2 { font-size: clamp(2rem, 4vw, 2.8rem); }
+.dl-card.seu .dl-tag { display: block; }
+.dl-card.seu .dl-ico { width: 80px; height: 80px; font-size: 2.6rem; }
+.dl-card.falta .dl-btn { pointer-events: none; opacity: .45; }
+.dl-card.player { background: var(--card2); border-style: dashed; }
+
+.dl-depois { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 56px; }
+.dl-depois .card .cmd { margin: 12px 0 0; font-size: .8rem; }
+.sha { margin-top: 90px; }
+.sha td code { font-size: .74rem; word-break: break-all; }
+.sha td:last-child { white-space: normal; }
+
+@media (max-width: 860px) {
+  .dl, .dl-depois { grid-template-columns: minmax(0, 1fr); }
+}

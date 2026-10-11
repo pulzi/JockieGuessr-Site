@@ -1,0 +1,129 @@
+/* ============================================================
+   Transição entre páginas: cada destino tem a sua.
+     home       → o vinil cai girando numa cortina laranja
+     manual     → a capa de um disco desliza por cima (tirando da prateleira)
+     host       → as barras de um equalizador sobem e cobrem a tela
+     novidades  → íris fechando com um disco girando ao contrário (rewind)
+     baixar     → barra de download enchendo
+   A direção (pt-d-r / pt-d-l) segue a ordem do menu.
+   ============================================================ */
+
+/* Antes do JS montar a cortina, a página nova já nasce coberta (sem piscar) */
+.pt-in body::before { content: ""; position: fixed; inset: 0; z-index: 10001; pointer-events: none; }
+.pt-in.pt-p-home body::before { background: #ff6b35; }
+.pt-in.pt-p-manual body::before { background: #f4ede1; }
+.pt-in.pt-p-host body::before { background: #14120f; }
+.pt-in.pt-p-novidades body::before { background: #0d0c0a; }
+.pt-in.pt-p-baixar body::before { background: #14120f; }
+
+.pt { position: fixed; inset: 0; z-index: 10000; pointer-events: none; overflow: hidden; }
+.pt.cover { pointer-events: auto; }
+.pt-bg, .pt-bars, .pt-box { position: absolute; inset: 0; }
+.pt-bars { display: none; }
+.pt-box { display: grid; place-content: center; justify-items: center; gap: 14px; text-align: center; }
+.pt-disc { width: 150px; height: 150px; border-radius: 50%; position: relative;
+  background: radial-gradient(circle, #14120f 0 4%, var(--accent) 5% 31%, #000 32% 33.5%, transparent 34%), repeating-radial-gradient(circle, #121212 0 3px, #222 3px 5px);
+  box-shadow: 0 0 0 4px #000, 10px 10px 0 #000; }
+.pt-disc::after { content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 20deg, transparent 0 8%, #ffffff26 12%, transparent 18% 50%, #ffffff1c 58%, transparent 64%);
+  -webkit-mask: radial-gradient(circle, transparent 33%, #000 34%); mask: radial-gradient(circle, transparent 33%, #000 34%); }
+.pt-ico { display: none; }
+.pt-name { font: 800 clamp(2.8rem, 9vw, 5.4rem)/1 "Bricolage Grotesque", sans-serif; letter-spacing: -.03em; }
+.pt-sub { font: 700 .82rem "JetBrains Mono", monospace; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+
+/* ---------- HOME: o vinil cai girando ---------- */
+.pt-p-home .pt-bg { background: radial-gradient(60% 50% at 50% 50%, #ffd16655, transparent 70%), #ff6b35; }
+.pt-p-home .pt-name { color: #1a1006; }
+.pt-p-home .pt-name span { color: #fff3e0; text-shadow: 3px 3px 0 #000; }
+.pt-p-home .pt-sub { color: #1a1006; }
+.pt-p-home .pt-disc { animation: girar .9s linear infinite; }
+.pt-p-home.cover .pt-bg { animation: home-cover .48s cubic-bezier(.7,0,.3,1) both; }
+.pt-p-home.cover .pt-box { animation: disc-drop .55s .12s cubic-bezier(.3,1.4,.5,1) both; }
+.pt-p-home.open .pt-bg { animation: home-open .6s .1s cubic-bezier(.7,0,.3,1) both; }
+.pt-p-home.open .pt-box { animation: pop-out .3s ease-in both; }
+@keyframes home-cover { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes home-open { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+@keyframes disc-drop { from { opacity: 0; transform: translateY(-60vh) rotate(-200deg); } }
+
+/* ---------- MANUAL: a capa do disco desliza ---------- */
+.pt-p-manual .pt-bg {
+  background:
+    linear-gradient(90deg, transparent calc(100% - 46px), #00000014 calc(100% - 46px)),
+    repeating-linear-gradient(0deg, transparent 0 22px, #0000000a 22px 23px),
+    #f4ede1;
+  box-shadow: 0 0 0 4px #000, 0 0 90px #000c;
+}
+.pt-p-manual .pt-name { color: #14120f; }
+.pt-p-manual .pt-sub { color: #6a5f4e; }
+.pt-p-manual .pt-disc { display: none; }
+.pt-p-manual .pt-ico { display: grid; place-items: center; font: 800 1.1rem "JetBrains Mono", monospace; color: #1a1006; background: #ff6b35; border: 3px solid #000; border-radius: 8px; padding: 6px 14px; box-shadow: 4px 4px 0 #000; transform: rotate(-4deg); }
+.pt-p-manual.cover .pt-bg, .pt-p-manual.cover .pt-box { animation: sleeve-in .52s cubic-bezier(.65,0,.35,1) both; }
+.pt-p-manual.open .pt-bg, .pt-p-manual.open .pt-box { animation: sleeve-out .58s .08s cubic-bezier(.65,0,.35,1) both; }
+.pt-p-manual.pt-d-r { --from: 105%; --to: -105%; --rot: 4deg; }
+.pt-p-manual.pt-d-l { --from: -105%; --to: 105%; --rot: -4deg; }
+@keyframes sleeve-in { from { transform: translateX(var(--from)) rotate(var(--rot)); } to { transform: none; } }
+@keyframes sleeve-out { from { transform: none; } to { transform: translateX(var(--to)) rotate(calc(var(--rot) * -1)); } }
+
+/* ---------- HOST: equalizador subindo ---------- */
+.pt-p-host .pt-bars { display: flex; align-items: flex-end; }
+.pt-bars i { flex: 1; height: 100%; background: #14120f; border-top: 6px solid var(--c, #ff6b35); border-right: 2px solid #000; transform-origin: bottom; }
+.pt-bars i:nth-child(3n+1) { --c: #ff6b35; } .pt-bars i:nth-child(3n+2) { --c: #ff9f43; } .pt-bars i:nth-child(3n) { --c: #ffd166; }
+.pt-p-host .pt-name { color: #f4ede1; }
+.pt-p-host .pt-sub { color: #ff9f43; }
+.pt-p-host .pt-disc { width: 96px; height: 96px; animation: girar 1.2s linear infinite; }
+.pt-p-host.cover .pt-bars i { animation: bar-up .42s cubic-bezier(.3,1.3,.5,1) both; animation-delay: calc(var(--n) * 26ms); }
+.pt-p-host.cover .pt-box { animation: pop-in .3s .36s cubic-bezier(.2,.9,.3,1.4) both; }
+.pt-p-host.open .pt-bars i { animation: bar-down .4s cubic-bezier(.6,0,.8,.4) both; animation-delay: calc(.08s + var(--n) * 22ms); }
+.pt-p-host.open .pt-box { animation: pop-out .25s ease-in both; }
+@keyframes bar-up { 0% { transform: scaleY(0); } 60% { transform: scaleY(var(--h)); } 100% { transform: none; } }
+@keyframes bar-down { 0% { transform: none; } 40% { transform: scaleY(var(--h)); } 100% { transform: scaleY(0); } }
+
+/* ---------- NOVIDADES: íris + rewind ---------- */
+.pt-p-novidades .pt-bg { background: repeating-radial-gradient(circle at 50% 50%, #0d0c0a 0 10px, #17140f 10px 12px); }
+.pt-p-novidades .pt-name { color: #f4ede1; }
+.pt-p-novidades .pt-name::before { content: "⏪ "; font-size: .6em; vertical-align: .18em; }
+.pt-p-novidades .pt-sub { color: #ffd166; }
+.pt-p-novidades .pt-disc { animation: girar .7s linear infinite reverse; }
+.pt-p-novidades.cover .pt-bg { animation: iris-in .5s cubic-bezier(.7,0,.3,1) both; }
+.pt-p-novidades.cover .pt-box { animation: pop-in .35s .25s cubic-bezier(.2,.9,.3,1.4) both; }
+.pt-p-novidades.open .pt-bg { animation: iris-out .55s .1s cubic-bezier(.7,0,.3,1) both; }
+.pt-p-novidades.open .pt-box { animation: pop-out .25s ease-in both; }
+@keyframes iris-in { from { clip-path: circle(0% at 50% 50%); } to { clip-path: circle(75% at 50% 50%); } }
+@keyframes iris-out { from { clip-path: circle(75% at 50% 50%); } to { clip-path: circle(0% at 50% 50%); } }
+
+/* ---------- BAIXAR: barra de download ---------- */
+.pt-p-baixar .pt-bg { background: radial-gradient(70% 60% at 50% 50%, #2a1a10, #14120f 75%); }
+.pt-p-baixar .pt-disc { display: none; }
+.pt-p-baixar .pt-ico { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 14px; background: #ff6b35; color: #1a1006; border: 3px solid #000; box-shadow: 5px 5px 0 #000; font-size: 2.4rem; }
+.pt-p-baixar .pt-name { color: #f4ede1; }
+.pt-p-baixar .pt-sub { opacity: 1; display: flex; align-items: center; gap: 12px; }
+.pt-dl { display: block; width: min(320px, 70vw); height: 14px; border-radius: 4px; background: #29251e; border: 2px solid #000; overflow: hidden; }
+.pt-dl i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #ff6b35, #ff9f43, #ffd166); transform-origin: left; transform: scaleX(0); }
+.pt-pct { font: 700 .9rem "JetBrains Mono", monospace; color: #ffd166; min-width: 3.2em; text-align: right; }
+.pt-p-baixar.cover .pt-bg { animation: fade-in .22s ease both; }
+.pt-p-baixar.cover .pt-box { animation: pop-in .3s cubic-bezier(.2,.9,.3,1.4) both; }
+.pt-p-baixar.cover .pt-ico { animation: drop .6s .1s cubic-bezier(.5,0,.5,1) both; }
+.pt-p-baixar.cover .pt-dl i { animation: fill .62s .06s cubic-bezier(.4,0,.2,1) both; }
+.pt-p-baixar.covered .pt-dl i, .pt-p-baixar.open .pt-dl i { transform: none; }
+.pt-p-baixar.covered .pt-pct, .pt-p-baixar.open .pt-pct { font-size: 0; }
+.pt-p-baixar.covered .pt-pct::after, .pt-p-baixar.open .pt-pct::after { content: "✓"; font-size: .95rem; color: #5ed38c; }
+.pt-p-baixar.open .pt-bg { animation: fade-out .45s .15s ease both; }
+.pt-p-baixar.open .pt-box { animation: sink .4s ease-in both; }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes fade-out { to { opacity: 0; } }
+@keyframes fill { to { transform: none; } }
+@keyframes drop { 0% { transform: translateY(-14px); } 50% { transform: translateY(8px); } 100% { transform: none; } }
+@keyframes sink { to { opacity: 0; transform: translateY(40px) scale(.9); } }
+
+/* ---------- comuns ---------- */
+@keyframes pop-in { from { opacity: 0; transform: scale(.7) rotate(-6deg); } }
+@keyframes pop-out { to { opacity: 0; transform: scale(1.2) rotate(4deg); } }
+
+/* o conteúdo novo entra deslizando do lado de onde você veio */
+.pt-entering body > main { animation: pt-slide .7s .15s cubic-bezier(.2,.8,.2,1) both; }
+.pt-entering.pt-d-l body > main { --dx: -40px; }
+@keyframes pt-slide { from { opacity: 0; transform: translateX(var(--dx, 40px)); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-in body::before, .pt { display: none; }
+}

@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual · JockieGuessr</title>
+<meta name="description" content="Como funciona cada parte do JockieGuessr: quem joga, o telão, o painel do host, pontuação, rodadas especiais, modo automático, som, letra, times e problemas comuns.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,500&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="transition.css">
+<link rel="stylesheet" href="doc.css">
+<meta name="theme-color" content="#14120f">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JockieGuessr">
+<meta property="og:title" content="Manual · JockieGuessr">
+<script>try{var p=sessionStorage.getItem('pt');if(p){sessionStorage.removeItem('pt');p=JSON.parse(p);document.documentElement.classList.add('pt-in','pt-p-'+p.p,'pt-d-'+p.d)}}catch(e){}</script>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="manual.html" class="on">Manual</a>
+    <a href="host.html">Host</a>
+    <a href="novidades.html">Novidades</a>
+  </nav>
+  <a class="btn sm" href="baixar.html"><i data-ic="baixar"></i> Baixar</a>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><i data-ic="menu"></i></button>
+</header>
+
+<main>
+<div class="doc-hero">
+  <p class="kicker"><span class="vinil gira"></span> Manual · <span data-versao>v1.3.0</span></p>
+  <h1>Como funciona <span class="tag-hl">cada coisa</span>.</h1>
+  <p class="lead">Do QR code na tela até o hall da fama. Use a busca (aperte <kbd>/</kbd>) ou vá direto na faixa que você quer ouvir.</p>
+</div>
+
+<div class="doc-wrap">
+  <aside class="toc" id="toc">
+    <label class="search"><i data-ic="busca"></i><input id="q" type="search" placeholder="Buscar no manual…" autocomplete="off" aria-label="Buscar no manual"></label>
+    <button class="toc-toggle" id="tocToggle" aria-expanded="false"><i data-ic="menu"></i> Índice</button>
+    <nav id="tocNav">
+      <p class="toc-group">Lado A · o jogo</p>
+      <a href="#visao">Visão geral</a>
+      <a href="#jogar">Quem joga</a>
+      <a href="#telao">Telão</a>
+      <a href="#rodada">Uma rodada</a>
+      <a href="#pontos">Pontuação</a>
+      <a href="#extras">Sequência, aposta e intro</a>
+      <a href="#especiais">Rodadas especiais</a>
+      <a href="#times">Times</a>
+      <a href="#galera">Playlist dos jogadores</a>
+      <a href="#hall">Resumo e hall da fama</a>
+      <p class="toc-group">Lado B · o host</p>
+      <a href="#painel">Painel do host</a>
+      <a href="#automatico">Modo automático</a>
+      <a href="#som">Som</a>
+      <a href="#tocando">Agora tocando e corretor</a>
+      <a href="#espera">Música de espera</a>
+      <a href="#letra">Letra sincronizada</a>
+      <a href="#placar">Quem sai, quem é expulso</a>
+      <p class="toc-group">Faixas bônus</p>
+      <a href="#discord">Telão no Discord</a>
+      <a href="#celular">Controlar pelo celular</a>
+      <a href="#problemas">Problemas comuns</a>
+      <a href="#creditos">Créditos</a>
+    </nav>
+    <p class="no-results" id="noResults" hidden>Nada encontrado. Tente outra palavra.</p>
+  </aside>
+
+  <article class="doc" id="doc">
+
+    <section id="visao" data-k="geral o que é quiz musical">
+      <h2><span class="ico-box hot"><i data-ic="disco"></i></span> Visão geral</h2>
+      <p>O JockieGuessr é um quiz musical para jogar em grupo. O <b>host</b> toca uma música no Spotify do PC; os amigos mandam o palpite pelo <b>celular</b> (música, artista, se é single/álbum/EP e qual álbum); o host avalia (o corretor sugere) e o resultado vai para o <b>telão</b>.</p>
+      <div class="flow" aria-label="Caminho de uma rodada">
+        <div class="node"><b>Spotify no PC</b><span>o host dá o play</span></div><span class="seta">→</span>
+        <div class="node"><b>Servidor do jogo</b><span>no PC do host, porta 8790</span></div><span class="seta">→</span>
+        <div class="node hot"><b>Celulares e telão</b><span>pelo navegador</span></div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Página</th><th>Para quem</th><th>Endereço</th></tr></thead>
+        <tbody>
+          <tr><td>Jogo</td><td>Quem joga (entra com um nome)</td><td><code>http://&lt;IP do PC&gt;:8790/</code> ou o link público</td></tr>
+          <tr><td>Host</td><td>Você (com senha)</td><td><code>http://localhost:8790/host#k=&lt;senha&gt;</code></td></tr>
+          <tr><td>Telão</td><td>Segundo monitor, TV, OBS (só exibe)</td><td><code>http://localhost:8790/telao</code></td></tr>
+        </tbody>
+      </table></div>
+      <p>Pelo app do host (Windows ou Linux) você nem precisa saber desses endereços: ele abre o painel já logado e tem o botão <b>Abrir o telão</b>.</p>
+    </section>
+
+    <section id="jogar" data-k="jogador celular entrar nome qr tutorial formulário palpite reação emoji">
+      <h2><span class="ico-box"><i data-ic="celular"></i></span> Quem joga</h2>
+      <ol class="passos">
+        <li>Aponte a câmera para o <b>QR code do telão</b> (ou abra o link que o host mandar).</li>
+        <li>Digite um nome. Na primeira vez neste aparelho, um <b>tutorial</b> de 4 telas explica o jogo (depois ele fica no botão <b>?</b> do topo).</li>
+        <li>Quando a rodada abre, aparece o formulário: <b>música</b> primeiro, depois o <b>artista</b>, se é <b>single, álbum ou EP</b> e <b>qual álbum</b> (opcional: em branco só não pontua). Só aparecem os campos que valem nas regras.</li>
+        <li>Dá para mudar o palpite até a rodada fechar. O tempo que conta é o do <b>último envio</b> (mandar o mesmo palpite de novo não perde o tempo).</li>
+      </ol>
+      <p>Embaixo da onda, as <b>reações</b> 🔥 😂 😱 😭 👏 💀 voam pelo telão com o seu nome (no máximo 6 a cada 4 s por pessoa). No lobby você escolhe o seu <b>time</b> (se tiver times) e as suas músicas (se a playlist dos jogadores estiver ligada).</p>
+      <div class="callout dica"><b>Som no celular</b> No modo <b>À distância</b>, a música toca no seu celular: toque no aviso "ativar o som". O atraso do áudio é descontado do seu tempo (até 2 s), para ninguém sair perdendo no bônus de rapidez.</div>
+    </section>
+
+    <section id="telao" data-k="telão tv obs segundo monitor qr pódio confete revelação capa vinil">
+      <h2><span class="ico-box gold"><i data-ic="telao"></i></span> Telão</h2>
+      <p>Uma tela só do jogo, sem botões: vai no segundo monitor, na TV, no OBS ou numa call do Discord. O que ela mostra:</p>
+      <ul>
+        <li><b>Lobby:</b> o QR code para entrar (voando devagar, para a câmera ler), quem já está na sala, os times, a tabela <b>Como pontua</b> e o "tocando agora" da música de espera.</li>
+        <li><b>Rodada:</b> a cena "Rodada N" com o vinil, a contagem, a onda seguindo o som, a barra de tempo e quem já palpitou.</li>
+        <li><b>Revelação:</b> a capa com o vinil saindo de trás, a resposta e os palpites de cada um, com o tempo e o bônus de rapidez. Depois de 15 s, troca sozinho para a classificação.</li>
+        <li><b>Fim de jogo:</b> o campeão (ou o empate), o pódio com confete, os destaques da partida e os recordes.</li>
+      </ul>
+      <p>No app do host, <b>Abrir o telão</b> (aba Telão) abre numa janela própria: com dois monitores, ele vai sozinho para o segundo em tela cheia; com um só, abre em janela (<kbd>F11</kbd> alterna a tela cheia, <kbd>Esc</kbd> sai). No navegador, a onda precisa de um clique para seguir o som (no OBS não precisa).</p>
+    </section>
+
+    <section id="rodada" data-k="rodada iniciar fechar revelar resposta certa avaliação manual na mão">
+      <h2><span class="ico-box"><i data-ic="gamepad"></i></span> Uma rodada (na mão)</h2>
+      <ol class="passos">
+        <li><b>Aba Rodada → Iniciar rodada.</b> Quem joga vê o formulário; o telão mostra quem já palpitou.</li>
+        <li>Toque a música. A <b>resposta certa</b> se preenche sozinha com o que o Spotify está tocando ("Preencher sozinho", ligado por padrão). Se você escrever a resposta, vale a sua.</li>
+        <li><b>Fechar palpites.</b> O jogo sugere ✓ / ~ / ✗ para cada campo, com o motivo embaixo ("1 letra diferente", "só parte do nome"…). Corrija o que quiser.</li>
+        <li><b>Revelar resultado.</b> O telão mostra a resposta e os palpites, e depois a classificação.</li>
+      </ol>
+      <p>Errou uma avaliação? Dá para mudar <b>depois</b> do resultado: o placar e o bônus se ajustam pela diferença.</p>
+      <div class="callout dica"><b>Rodada bônus</b> <b>Rodada bônus</b> (no lobby) ou <b>Próxima vale dobro</b> (no resultado): tudo o que se ganha nela dobra, inclusive o bônus de rapidez. No meio da rodada, <b>Valer dobro</b> liga e desliga.</div>
+    </section>
+
+    <section id="pontos" data-k="pontos pontuação regras parcial metade bônus velocidade rapidez completo casual">
+      <h2><span class="ico-box hot"><i data-ic="trofeu"></i></span> Pontuação</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Campo</th><th>Padrão</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td>Música</td><td>2</td><td>Parcial vale metade (1)</td></tr>
+          <tr><td>Artista</td><td>2</td><td>O artista principal de uma parceria basta</td></tr>
+          <tr><td>Tipo</td><td>1</td><td>Single, álbum ou EP</td></tr>
+          <tr><td>Álbum</td><td>2</td><td>Só vale se a música não for single; em branco não pontua</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><b>Atalhos da aba Regras:</b> <b>Completo</b> (os quatro campos) ou <b>Casual</b> (só música e artista). Ou cada campo ligado/desligado, de 1 a 5 pontos. Sem tipo, sem álbum.</li>
+        <li><b>Bônus de rapidez</b> (padrão +3, +2, +1): entre quem acertou música e artista (parcial também vale), os mais rápidos ganham. O tempo conta da abertura da rodada até o último envio.</li>
+        <li>Mudou as regras no meio de uma rodada: vale a partir da próxima.</li>
+      </ul>
+      <p>Quer fazer a conta? A página inicial tem um <a href="index.html#pontos">cupom interativo</a>.</p>
+    </section>
+
+    <section id="extras" data-k="sequência fogo aposta tenho certeza intro primeiros segundos extras">
+      <h2><span class="ico-box"><i data-ic="fogo"></i></span> Sequência, aposta e intro</h2>
+      <p>Aba <b>Regras → Extras</b> (os números são editáveis):</p>
+      <ul>
+        <li>🔥 <b>Sequência de acertos:</b> a partir da 3ª rodada seguida acertando música e artista, +1 por rodada enquanto durar. O 🔥 com o número aparece ao lado do nome (a partir de 2 seguidas).</li>
+        <li>🎯 <b>Aposta "tenho certeza":</b> 3 por jogo. Quem marca e acerta tem os pontos dos campos dobrados; quem erra perde 2. (0 desliga.)</li>
+        <li>⏱️ <b>Modo intro:</b> a música toca só os primeiros N segundos (0 desliga). O jogo controla o Spotify do PC: volta ao começo, toca e pausa; na revelação, a música volta.</li>
+      </ul>
+    </section>
+
+    <section id="especiais" data-k="rodadas especiais roleta relâmpago heardle quem escolheu roubo letra completar duelo mesmo artista triplo dobro avançado">
+      <h2><span class="ico-box gold"><i data-ic="roleta"></i></span> Rodadas especiais</h2>
+      <p>Na aba <b>Rodada</b>, o menu <b>Rodada especial</b> (no lobby e no resultado) tem um botão para cada uma e <b>Girar a roleta</b>. No automático: "Rodada especial a cada N rodadas" (padrão 4), sorteada na roleta do telão (ou sem ela). Os números ficam na aba <b>Avançado</b>.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Rodada</th><th>Como funciona (padrão)</th></tr></thead>
+        <tbody>
+          <tr><td>⭐ Vale dobro / triplo</td><td>Tudo o que se ganha na rodada ×2 / ×3.</td></tr>
+          <tr><td>⚡ Relâmpago</td><td>10 s de música e ela para; mais 30 s para digitar. Só o mais rápido que acertar pontua (×2).</td></tr>
+          <tr><td>👂 Heardle</td><td>A música vem aos pouquinhos: 1, 3, 7 e 15 s (cada trecho volta ao começo, com 6 s entre eles). Acertou no 1º trecho: +5; 2º: +3; 3º: +2; 4º: +1 (no lugar do bônus de rapidez).</td></tr>
+          <tr><td>🎭 Quem escolheu?</td><td>Só com a playlist dos jogadores: o formulário pede também quem pôs a música (+2).</td></tr>
+          <tr><td>💰 Roubo</td><td>O mais rápido que acertar rouba 2 pontos de quem estava em 1º.</td></tr>
+          <tr><td>🎤 Só a letra</td><td>Sem som: a letra aparece aos poucos (4 linhas, uma a cada 8 s), sem as linhas com o nome da música. Na revelação, a música toca daquele trecho.</td></tr>
+          <tr><td>🎶 Complete a letra</td><td>A música toca 10 s antes de uma linha e para no meio dela; quem completar as 2 palavras que faltam ganha +3 (quase certo, metade). Precisa da letra com o tempo de cada palavra; sem isso vira "só a letra", e sem letra, rodada normal.</td></tr>
+          <tr><td>⚔️ Duelo</td><td>Dois sorteados palpitam; vence quem fizer mais pontos (+2; empate: o mais rápido que acertou). O resto torce pelo celular: quem acertar o vencedor ganha +1.</td></tr>
+          <tr><td>💿 Mesmo artista</td><td>No automático: 3 músicas seguidas do mesmo artista da playlist, valendo só o nome da música. Na mão: uma rodada, com o artista da música no Spotify.</td></tr>
+          <tr><td>🎲 Roleta</td><td>Gira no telão e para numa das de cima (ou em "rodada normal", o azar).</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout aviso"><b>Spotify no comando</b> Relâmpago e heardle controlam o Spotify do PC (tocar, pausar, voltar ao começo). Na mão, deixe a música da rodada pronta (pausada) antes de começar; no automático, o jogo cuida disso.</div>
+    </section>
+
+    <section id="times" data-k="times equipes soma média sortear laranja dourado azul verde">
+      <h2><span class="ico-box"><i data-ic="times"></i></span> Times</h2>
+      <p>Aba <b>Regras → Jogar em times</b>: de 2 a 4 times, com nome, e o placar do time pela <b>soma</b> dos pontos de quem está nele ou pela <b>média</b> (justa quando os times têm tamanhos diferentes).</p>
+      <ul>
+        <li>Quem entra cai no time com menos gente; cada um troca pelo celular, no lobby (card "Seu time").</li>
+        <li>Na aba <b>Placar</b>: o placar dos times, <b>Sortear times</b> (equilibrados) e um menu em cada jogador para mudar o time.</li>
+        <li>O telão mostra os times no lobby, na classificação e no fim ("Laranja venceu!"); cada avatar ganha um anel na cor do time.</li>
+      </ul>
+    </section>
+
+    <section id="galera" data-k="playlist dos jogadores escolher músicas busca link essa é sua escolhida por">
+      <h2><span class="ico-box cream"><i data-ic="playlist"></i></span> Playlist dos jogadores</h2>
+      <p>Aba <b>Automático → Playlist dos jogadores</b>. Com "Deixar quem joga escolher as músicas" ligado, cada um escolhe no celular, no lobby, até N músicas (padrão 3): pela <b>busca do Spotify</b> (precisa da conta conectada) ou <b>colando o link</b> da música. Ninguém vê as músicas dos outros; o telão só mostra quantas cada um pôs.</p>
+      <p><b>Usar no automático</b> faz o jogo tocar todas, uma rodada por música (precisa da conta Premium). Quando toca a música de alguém, essa pessoa não palpita ("Essa é sua!"); se <b>ninguém acertar</b>, ela ganha +3 (+6 na rodada bônus). Na revelação aparece "Escolhida por…".</p>
+    </section>
+
+    <section id="hall" data-k="resumo fim de jogo destaques hall da fama recorde vitórias">
+      <h2><span class="ico-box gold"><i data-ic="coroa"></i></span> Resumo e hall da fama</h2>
+      <p>No <b>fim de jogo</b>, o telão e o celular mostram os destaques da partida: o palpite certo mais rápido, a maior sequência, quem mais acertou, a rodada que rendeu mais pontos e as músicas que ninguém acertou.</p>
+      <p>O <b>hall da fama</b> guarda os recordes entre partidas: maior pontuação num jogo, palpite mais rápido de todos, maior sequência e quem tem mais vitórias. Quem bate um recorde ganha o selo <b>"Novo recorde!"</b>. Na aba <b>Placar</b> tem <b>Zerar o hall da fama</b>.</p>
+    </section>
+
+    <section id="painel" data-k="painel host abas rodada automático placar regras avançado som links técnico telão guia">
+      <h2><span class="ico-box cream"><i data-ic="engrenagem"></i></span> Painel do host</h2>
+      <p>Nove abas, do jogo para o técnico. Na primeira vez, o <b>guia de primeiros passos</b> abre sozinho (depois fica no botão <b>Guia</b> do topo).</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Aba</th><th>O que tem</th></tr></thead>
+        <tbody>
+          <tr><td><b>Rodada</b></td><td>Jogar na mão: iniciar/fechar/revelar, rodada especial (botões e roleta), resposta certa, palpites e avaliação</td></tr>
+          <tr><td><b>Automático</b></td><td>O jogo sozinho: playlist, tempos, rodadas especiais a cada N, começar/assumir; playlist dos jogadores</td></tr>
+          <tr><td><b>Placar</b></td><td>Times, pontos, ajustes, expulsar, quem saiu, hall da fama, encerrar e zerar</td></tr>
+          <tr><td><b>Regras</b></td><td>Campos que valem, pontos, bônus de rapidez, extras, reações e times</td></tr>
+          <tr><td><b>Avançado</b></td><td>Os números de cada rodada especial e o que pode sair na roleta</td></tr>
+          <tr><td><b>Som</b></td><td>Todos juntos / à distância, o que vai no som, transmitir, música de espera e como a letra aparece</td></tr>
+          <tr><td><b>Links</b></td><td>Links e QR de quem joga e do telão; controlar pelo celular</td></tr>
+          <tr><td><b>Técnico</b></td><td>Conta do Spotify, link público (rápido / meu domínio), fontes da letra, telão no Discord</td></tr>
+          <tr><td><b>Telão</b></td><td>Prévia do telão, Abrir o telão e Copiar o link do telão</td></tr>
+        </tbody>
+      </table></div>
+      <p><b>Vou jogar também</b> (aba Automático): entre pelo celular como jogador; o painel nem recebe a resposta, o "agora tocando" e os palpites até a revelação. (Só não olhe o Spotify do PC.)</p>
+    </section>
+
+    <section id="automatico" data-k="automático playlist spotify premium sortear trecho aleatório não repete tocadas assumir controle">
+      <h2><span class="ico-box hot"><i data-ic="robo"></i></span> Modo automático</h2>
+      <ol class="passos">
+        <li>Cole o link de uma playlist pública (Spotify → Compartilhar → Copiar link) e clique em <b>Carregar</b>. Com a conta conectada, escolha no menu "Suas playlists".</li>
+        <li>Com a conta conectada, só deixe o Spotify aberto no PC. Sem conta, abra a playlist no Spotify do PC e dê play.</li>
+        <li><b>Começar jogo automático.</b> Padrão: 10 rodadas, 30 s para palpitar, 12 s no resultado; a última vale dobro.</li>
+      </ol>
+      <p>Cada rodada troca a música, abre os palpites com contagem, fecha no prazo (ou quando todo mundo palpitou), avalia, revela e segue. No fim, a cena "Fim de jogo" com o pódio.</p>
+      <div class="grid2">
+        <div class="card"><h4><i data-ic="check2"></i> Com a conta (Premium)</h4><p>O jogo sorteia a faixa e manda o Spotify do PC tocá-la, já no trecho certo se o "trecho aleatório" estiver ligado (entre 15% e 55% da música).</p></div>
+        <div class="card"><h4><i data-ic="sortear"></i> Sem conta</h4><p>Liga o aleatório e pula para a próxima até cair numa música da playlist (no Spotify Free, espera o anúncio acabar).</p></div>
+      </div>
+      <ul>
+        <li><b>Não repete:</b> o jogo lembra o que já tocou (entre partidas) e passa pela playlist inteira antes de repetir. <b>Esquecer as tocadas</b> zera isso.</li>
+        <li><b>Assumir o controle / Devolver para a automação</b> a qualquer hora (clicar num botão manual de rodada também assume).</li>
+        <li><b>Mostrar a playlist:</b> QR code verde no lobby do telão e botão "Ver a playlist" no celular.</li>
+        <li>O jogo <b>nunca</b> mexe no volume, no aleatório ou no repetir (quando tem conta).</li>
+      </ul>
+    </section>
+
+    <section id="som" data-k="som áudio captura opus juntos distância transmitir discord spotify pipewire caixa">
+      <h2><span class="ico-box"><i data-ic="som"></i></span> Som</h2>
+      <p>O servidor captura o som do PC do host e manda em Opus para todo mundo. Aba <b>Som</b>:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>🏠 Todos juntos</th><th>🌎 À distância</th></tr></thead>
+        <tbody>
+          <tr><td>Onde o som toca</td><td>Na caixa de som do PC</td><td>No celular de cada um</td></tr>
+          <tr><td>Celulares</td><td>Mudos (a onda continua dançando)</td><td>Tocam (toque em "ativar o som")</td></tr>
+          <tr><td>Link / QR code</td><td>IP da rede Wi-Fi</td><td>Link público (<code>*.trycloudflare.com</code> ou o seu domínio)</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><b>O que vai no som:</b> só o <b>Spotify</b> (sem as vozes do Discord) ou "Tudo do PC (menos o Discord)". Se o Spotify fechar e abrir de novo, a captura acompanha.</li>
+        <li><b>Só transmitir com os palpites abertos</b> (ligado por padrão): enquanto você procura a próxima música, ninguém ouve.</li>
+        <li>No Windows, a captura usa o <code>AudioCapture.exe</code>; no Linux, o <b>PipeWire</b> (<code>pw-record</code> + <code>pw-link</code>). O host e o telão nunca tocam o som, só recebem para a onda.</li>
+      </ul>
+    </section>
+
+    <section id="tocando" data-k="agora tocando corretor capa deezer tipo single álbum ep mpris cache">
+      <h2><span class="ico-box"><i data-ic="album"></i></span> Agora tocando e corretor</h2>
+      <ul>
+        <li><b>Agora tocando:</b> o jogo lê o que o Spotify está tocando (no Windows pelo controle de mídia; no Linux pelo MPRIS): título, artista, álbum, capa e posição. O Deezer completa com o <b>tipo</b> (single/álbum/EP) e a <b>capa grande</b>.</li>
+        <li><b>Capa:</b> no painel, na revelação, no telão e no celular, só na revelação. O endereço é assinado: não dá para adivinhar a resposta por ele. Fica em cache (até 400 álbuns).</li>
+        <li><b>Corretor:</b> maiúsculas, acentos, pontuação, "(feat. …)", "The" no começo e sufixos como "- Remastered 2011" ou "(Deluxe)" não contam. Erro de digitação, só parte do nome, metade das palavras ou só um dos artistas viram <b>parcial</b>. <a href="index.html#corretor">Teste aqui</a>.</li>
+      </ul>
+    </section>
+
+    <section id="espera" data-k="música de espera lobby tocando agora clima playlist">
+      <h2><span class="ico-box"><i data-ic="fone"></i></span> Música de espera</h2>
+      <p>Aba <b>Som → Música de espera e letra</b>. Uma playlist só para quando ninguém está jogando: toca sozinha quando o jogo volta ao lobby ou chega ao fim (ou em <b>Tocar agora</b> / <b>Outra música</b>). Faixas que também estão na playlist do jogo são puladas, para não entregar resposta.</p>
+      <p>Precisa da conta do Spotify com a permissão de tocar; sem conta, dê play na playlist de espera você mesmo e o resto funciona igual. Rodada na mão começando com ela tocando: o jogo pausa o Spotify.</p>
+    </section>
+
+    <section id="letra" data-k="letra sincronizada karaokê spicy lyrics netease lrclib palavra por palavra">
+      <h2><span class="ico-box gold"><i data-ic="microfone"></i></span> Letra sincronizada</h2>
+      <p>Palavra por palavra, de três fontes, nesta ordem:</p>
+      <ol class="passos">
+        <li><b>Spicy Lyrics</b> (oficial, sílaba por sílaba). Precisa de uma chave secreta (<code>sl_sk_…</code>) colada na aba Técnico e do id da faixa no Spotify. Os termos pedem o crédito junto da letra e não guardar nada por mais de 30 dias: o jogo faz os dois.</li>
+        <li><b>NetEase</b> (opção "Procurar também na NetEase"): não oficial, com o tempo de cada palavra.</li>
+        <li><b>LRCLIB</b>: por linha; o jogo estima o tempo de cada palavra.</li>
+      </ol>
+      <p><b>Quando aparece:</b> no telão, como faixa de karaokê, e no celular numa caixinha (dá para tirar dos celulares). Só quando não entrega nada: no lobby e no fim, se for a música de espera; no resultado, se for a música revelada. <b>Nunca com os palpites abertos.</b></p>
+    </section>
+
+    <section id="placar" data-k="sair expulsar fora da sala remover zerar placar 30 segundos">
+      <h2><span class="ico-box"><i data-ic="galera"></i></span> Quem sai, quem é expulso</h2>
+      <ul>
+        <li>Quem fecha a página some das listas depois de <b>30 s</b>. Se voltar (mesmo aparelho), os pontos voltam junto. No placar, essas pessoas ficam em "Fora da sala", com <b>Remover</b>.</li>
+        <li><b>✕ no placar</b> expulsa da sala (dois cliques). A pessoa vê "Você saiu da sala" e não volta com a mesma sessão.</li>
+        <li><b>Zerar placar</b> também esquece quem não está mais na sala.</li>
+      </ul>
+    </section>
+
+    <section id="discord" data-k="discord atividade activity call ouvir aqui domínio url mapping">
+      <h2><span class="ico-box"><i class="bi" style="--i:url(assets/icons/discord.svg)"></i></span> Telão no Discord</h2>
+      <p>O telão abre <b>dentro de uma call do Discord</b> como Atividade: todo mundo vê o jogo e cada um pode tocar em <b>"Ouvir aqui"</b>. Quem joga continua pelo celular. Não usa vídeo, então não esbarra na suspensão de vídeo do Discord no Brasil.</p>
+      <p>Precisa do link público com <b>o seu domínio</b>. O passo a passo está no <a href="host.html#discord">guia do host</a>.</p>
+    </section>
+
+    <section id="celular" data-k="controle celular android apk qr uso único vibrar painel">
+      <h2><span class="ico-box"><i data-ic="vibrar"></i></span> Controlar pelo celular</h2>
+      <p>O jogo continua rodando no PC; o celular vira o painel do host. Na aba <b>Links</b>, card <b>Controlar pelo celular → Mostrar QR code</b>: o QR leva um código de <b>uso único que vale 2 minutos</b> (a senha nunca aparece).</p>
+      <p>Escaneie com a câmera (abre no navegador, Android ou iPhone) ou com o app <b>JockieGuessr Controle</b> (Android 8+): tela cheia, lembra do PC, mantém a tela acesa, vibra a cada palpite (mais forte quando todo mundo palpitou) e oferece <b>Tentar de novo</b> se o PC sumir. <a href="baixar.html">Baixar o APK</a>.</p>
+    </section>
+
+    <section id="problemas" data-k="problemas erro smartscreen editor desconhecido não abre celular som não toca cloudflared porta">
+      <h2><span class="ico-box"><i data-ic="alerta"></i></span> Problemas comuns</h2>
+      <h3>O Windows disse "editor desconhecido"</h3>
+      <p>O <code>.exe</code> não é assinado. Clique em <b>Mais informações → Executar assim mesmo</b>.</p>
+      <h3>O celular não abre o link</h3>
+      <p>No modo juntos, o celular precisa estar no <b>mesmo Wi-Fi</b> do PC (o QR usa o IP da rede, porque "localhost" não abre no celular). Rede de visitante às vezes isola os aparelhos: use o modo à distância.</p>
+      <h3>O link público não aparece</h3>
+      <p>Falta o <code>cloudflared</code>: <code>winget install Cloudflare.cloudflared</code> no Windows, <code>sudo pacman -S cloudflared</code> no Arch/CachyOS.</p>
+      <h3>Não sai som no celular</h3>
+      <p>Toque no aviso "ativar o som" (o navegador exige um toque). Confira se o modo é <b>À distância</b> e se "Só transmitir com os palpites abertos" não está segurando o som.</p>
+      <h3>O automático pula música sem parar</h3>
+      <p>Sem conta conectada, ele pula até cair numa música da playlist: confira se a playlist certa está tocando no Spotify do PC. Com conta, confira se ela é Premium e se o Spotify está aberto.</p>
+    </section>
+
+    <section id="creditos" data-k="créditos lucide ícones letras licença">
+      <h2><span class="ico-box"><i data-ic="estrela"></i></span> Créditos</h2>
+      <p>Ícones: <a href="https://lucide.dev" target="_blank" rel="noopener">Lucide</a> (ISC), no jogo e neste site. Marcas: <a href="https://simpleicons.org" target="_blank" rel="noopener">Simple Icons</a> (CC0). Letras: <a href="https://spicylyrics.org" target="_blank" rel="noopener">Spicy Lyrics</a> (com o crédito de quem sincronizou), NetEase Cloud Music e <a href="https://lrclib.net" target="_blank" rel="noopener">LRCLIB</a>. Fontes: Bricolage Grotesque e DM Sans (OFL).</p>
+    </section>
+
+  </article>
+</div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+      <p>Quiz musical com telão, feito pelo Pulzi para jogar com os amigos.</p>
+      <p class="sig">Este site foi feito pelo <span>Claude Code</span>, do jeito dele. ✦</p>
+    </div>
+    <div><h4>Lado A</h4><ul><li><a href="index.html#como">Como funciona</a></li><li><a href="index.html#corretor">Teste o corretor</a></li><li><a href="index.html#especiais">Rodadas especiais</a></li><li><a href="index.html#pontos">Quanto vale</a></li></ul></div>
+    <div><h4>Lado B</h4><ul><li><a href="manual.html">Manual</a></li><li><a href="host.html">Guia do host</a></li><li><a href="novidades.html">Novidades</a></li><li><a href="baixar.html">Baixar</a></li></ul></div>
+    <div><h4>Créditos</h4><ul><li><a href="https://lucide.dev" target="_blank" rel="noopener">Ícones: Lucide</a></li><li><a href="https://simpleicons.org" target="_blank" rel="noopener">Marcas: Simple Icons</a></li><li><a href="https://lrclib.net" target="_blank" rel="noopener">Letras: LRCLIB</a></li><li><a href="https://spicylyrics.org" target="_blank" rel="noopener">Letras: Spicy Lyrics</a></li></ul></div>
+  </div>
+  <div class="foot-bar">JockieGuessr · <span data-versao>v1.3.0</span> · 33⅓ rpm</div>
+</footer>
+
+<script src="downloads-data.js"></script>
+<script src="icones.js"></script>
+<script src="doc.js"></script>
+<script src="cursor.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guia do host · JockieGuessr</title>
+<meta name="description" content="Como hospedar o JockieGuessr: app do Windows, Linux ou terminal, conta do Spotify, link público, telão no Discord e controle pelo celular, com checklist.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,500&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="transition.css">
+<link rel="stylesheet" href="doc.css">
+<link rel="stylesheet" href="host.css">
+<meta name="theme-color" content="#14120f">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JockieGuessr">
+<meta property="og:title" content="Guia do host · JockieGuessr">
+<script>try{var p=sessionStorage.getItem('pt');if(p){sessionStorage.removeItem('pt');p=JSON.parse(p);document.documentElement.classList.add('pt-in','pt-p-'+p.p,'pt-d-'+p.d)}}catch(e){}</script>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="manual.html">Manual</a>
+    <a href="host.html" class="on">Host</a>
+    <a href="novidades.html">Novidades</a>
+  </nav>
+  <a class="btn sm" href="baixar.html"><i data-ic="baixar"></i> Baixar</a>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><i data-ic="menu"></i></button>
+</header>
+
+<main>
+<div class="doc-hero">
+  <p class="kicker"><span class="vinil gira"></span> Guia do host</p>
+  <h1>Vai ser o <span class="tag-hl">DJ</span> da noite.</h1>
+  <p class="lead">Tudo o que roda fica no seu PC: o jogo, o som e o túnel. Escolha o seu caminho, vá marcando o checklist (ele fica salvo neste navegador) e chame a galera.</p>
+  <div class="progresso-check" id="progresso"><div class="pc-bar"><i id="pcBar"></i></div><span id="pcTxt">0 de 0</span><button type="button" class="btn ghost sm" id="pcZerar">Zerar checklist</button></div>
+</div>
+
+<div class="doc-wrap">
+  <aside class="toc" id="toc">
+    <label class="search"><i data-ic="busca"></i><input id="q" type="search" placeholder="Buscar no guia…" autocomplete="off" aria-label="Buscar no guia"></label>
+    <button class="toc-toggle" id="tocToggle" aria-expanded="false"><i data-ic="menu"></i> Índice</button>
+    <nav id="tocNav">
+      <p class="toc-group">Antes de tudo</p>
+      <a href="#caminho">Escolha o caminho</a>
+      <a href="#env">Senha fixa (.env)</a>
+      <p class="toc-group">Opcionais</p>
+      <a href="#spotify">Conta do Spotify</a>
+      <a href="#publico">Link público</a>
+      <a href="#letras">Fontes da letra</a>
+      <a href="#discord">Telão no Discord</a>
+      <a href="#android">Controle Android</a>
+      <p class="toc-group">Na hora da festa</p>
+      <a href="#festa">Checklist da festa</a>
+      <a href="#dados">Onde ficam os dados</a>
+    </nav>
+    <p class="no-results" id="noResults" hidden>Nada encontrado. Tente outra palavra.</p>
+  </aside>
+
+  <article class="doc" id="doc">
+
+    <section id="caminho" data-k="windows linux terminal exe appimage npm start instalar">
+      <h2><span class="ico-box hot"><i data-ic="disco"></i></span> Escolha o caminho</h2>
+      <div class="rotas" role="tablist" aria-label="Como você vai rodar">
+        <button type="button" role="tab" data-rota="win" class="on"><i class="bi" style="--i:url(assets/icons/windows.svg)"></i> App do Windows</button>
+        <button type="button" role="tab" data-rota="linux"><i class="bi" style="--i:url(assets/icons/linux.svg)"></i> Linux</button>
+        <button type="button" role="tab" data-rota="term"><i data-ic="terminal"></i> Terminal</button>
+      </div>
+
+      <div class="rota" data-rota="win">
+        <p>O <code>JockieGuessr-Host.exe</code> é portátil: dois cliques e pronto, sem instalar e sem terminal. Os jogadores continuam no navegador do celular.</p>
+        <ul class="check" data-grupo="win">
+          <li data-id="win-baixar"><a href="baixar.html">Baixe o <code>JockieGuessr-Host.exe</code></a> e coloque numa pasta sua.</li>
+          <li data-id="win-abrir">Abra. Na primeira vez o Windows avisa "editor desconhecido": <b>Mais informações → Executar assim mesmo</b>.</li>
+          <li data-id="win-painel">O app liga o jogo, o som e o túnel, e abre o <b>painel do host já logado</b>. O guia de primeiros passos aparece sozinho.</li>
+          <li data-id="win-telao"><b>Abrir o telão</b> (aba Telão): com dois monitores ele vai para o segundo em tela cheia.</li>
+        </ul>
+        <div class="callout dica"><b>Fica salvo</b> Senha do host, sessões, placar e configurações ficam em <code>%APPDATA%\JockieGuessr</code>: sobrevivem a trocar o <code>.exe</code>. Fechar o painel fecha tudo (telão, captura de som e túnel).</div>
+      </div>
+
+      <div class="rota" data-rota="linux" hidden>
+        <p>O jogo inteiro roda no Linux. O que no Windows usa os <code>.exe</code> nativos, aqui usa o que o sistema já tem: <b>PipeWire</b> para o som e <b>MPRIS</b> para o "agora tocando".</p>
+        <ul class="check" data-grupo="linux">
+          <li data-id="lx-baixar"><a href="baixar.html">Baixe o <code>JockieGuessr-Host.AppImage</code></a>.</li>
+          <li data-id="lx-chmod">Dê permissão de execução e abra com dois cliques:<div class="cmd"><code>chmod +x JockieGuessr-Host.AppImage</code><button type="button" data-copy="chmod +x JockieGuessr-Host.AppImage">copiar</button></div></li>
+          <li data-id="lx-pw">Confira se o sistema usa PipeWire (a maioria das distros atuais usa). Na lista de apps do som, o nome é o que o app informa ao PipeWire (ex.: "Spotify").</li>
+          <li data-id="lx-spotify">Abra o Spotify do Linux: ele informa título, artista, álbum, capa e posição, e aceita tocar/pausar/próxima.</li>
+        </ul>
+        <div class="callout"><b>Dados</b> Ficam em <code>~/.config/JockieGuessr</code>.</div>
+      </div>
+
+      <div class="rota" data-rota="term" hidden>
+        <p>Para quem tem o código: precisa do <b>Node.js 22.9</b> ou mais novo.</p>
+        <ul class="check" data-grupo="term">
+          <li data-id="t-install">Instale as dependências:<div class="cmd"><code>npm install</code><button type="button" data-copy="npm install">copiar</button></div></li>
+          <li data-id="t-build">Gere o site do jogo:<div class="cmd"><code>npm run build</code><button type="button" data-copy="npm run build">copiar</button></div></li>
+          <li data-id="t-env">Crie o <code>.env</code> com a senha fixa (<a href="#env">gerador logo abaixo</a>).</li>
+          <li data-id="t-start">Ligue o servidor. O console mostra os três endereços (jogo, host e telão):<div class="cmd"><code>npm start</code><button type="button" data-copy="npm start">copiar</button></div></li>
+        </ul>
+        <p>Sem <code>HOST_PASSWORD</code> no <code>.env</code>, o servidor cria uma senha nova a cada vez e mostra o link do host já com ela. Para testar o app sem empacotar: <code>npm run app</code>.</p>
+      </div>
+    </section>
+
+    <section id="env" data-k="env senha host_password session_secret public_url porta gerador">
+      <h2><span class="ico-box gold"><i data-ic="chave"></i></span> Senha fixa (.env)</h2>
+      <p>Pelo terminal, o <code>.env</code> fixa a senha do host e o segredo de sessão: assim ninguém precisa entrar de novo quando o servidor reinicia. (No app, isso já fica guardado sozinho.)</p>
+      <div class="envgen">
+        <div class="envgen-f">
+          <label><span>Senha do host</span><input id="eSenha" autocomplete="off" spellcheck="false"></label>
+          <label><span>Porta</span><input id="ePorta" value="8790" inputmode="numeric" autocomplete="off"></label>
+          <label class="full"><span>Link público fixo <small>(opcional, ex.: https://jockie.seudominio.com)</small></span><input id="eUrl" placeholder="em branco: o jogo usa o IP do PC" autocomplete="off" spellcheck="false"></label>
+          <div class="envgen-b"><button type="button" class="btn ghost sm" id="eNovo"><i data-ic="sortear"></i> Gerar outra senha e segredo</button></div>
+        </div>
+        <div class="envgen-out">
+          <div class="envgen-top"><span>.env</span><button type="button" class="btn sm" id="eCopiar"><i data-ic="copiar"></i> Copiar</button></div>
+          <pre id="eOut"></pre>
+        </div>
+      </div>
+      <div class="callout perigo"><b>Segredo</b> Tudo é gerado aqui no seu navegador (nada sai desta página). O <code>.env</code> nunca vai para o repositório (está no <code>.gitignore</code>). Não mande esse arquivo para ninguém.</div>
+    </section>
+
+    <section id="spotify" data-k="spotify conta premium client id developer dashboard redirect uri pkce login">
+      <h2><span class="ico-box"><i class="bi" style="--i:url(assets/icons/spotify.svg)"></i></span> Conta do Spotify <span class="badge">opcional</span></h2>
+      <p>Sem login, a playlist é lida pela página pública (até ~100 músicas) e o automático pula até cair numa música dela. Com login (Premium), o jogo lê <b>todas</b> as músicas das suas playlists, toca a <b>faixa exata</b> e lista as suas playlists num menu.</p>
+      <ul class="check" data-grupo="spotify">
+        <li data-id="sp-app">Em <a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">developer.spotify.com/dashboard</a>, crie um app com uma conta <b>Premium</b> e marque <b>Web API</b>.</li>
+        <li data-id="sp-uri">Cadastre exatamente este Redirect URI:<div class="cmd"><code class="nodollar">http://127.0.0.1:8790/spotify/callback</code><button type="button" data-copy="http://127.0.0.1:8790/spotify/callback">copiar</button></div></li>
+        <li data-id="sp-id">Copie o <b>Client ID</b>, cole na aba <b>Técnico</b> do painel e clique em <b>Entrar com Spotify</b> (no PC).</li>
+      </ul>
+      <p>O login é PKCE: só o refresh token fica no seu PC, e nunca vai para página nenhuma. O jogo nunca chama o controle de volume.</p>
+    </section>
+
+    <section id="publico" data-k="link público cloudflare cloudflared túnel domínio token distância trycloudflare">
+      <h2><span class="ico-box"><i data-ic="nuvem"></i></span> Link público <span class="badge">para jogar à distância</span></h2>
+      <p>No modo <b>À distância</b>, cada um entra de casa por um link público, aberto por um túnel do Cloudflare. Não precisa abrir porta no roteador e o seu IP fica escondido.</p>
+      <ul class="check" data-grupo="publico">
+        <li data-id="pb-cf">Instale o <code>cloudflared</code>:
+          <div class="cmd"><code>winget install Cloudflare.cloudflared</code><button type="button" data-copy="winget install Cloudflare.cloudflared">copiar</button></div>
+          <div class="cmd"><code>sudo pacman -S cloudflared</code><button type="button" data-copy="sudo pacman -S cloudflared">copiar</button></div>
+          <span class="muted">(o primeiro no Windows; o segundo no Arch/CachyOS, ou o pacote da sua distro)</span></li>
+        <li data-id="pb-modo">Aba <b>Som</b> → <b>À distância</b>. O QR do telão passa a usar o link público.</li>
+      </ul>
+      <div class="grid2">
+        <div class="card"><h4><i data-ic="raio"></i> Rápido</h4><p>Um endereço <code>*.trycloudflare.com</code>, sem conta. Muda a cada vez que liga.</p></div>
+        <div class="card"><h4><i data-ic="link"></i> Meu domínio</h4><p>Endereço fixo, como <code>https://jockie.seudominio.com</code>. Precisa de um domínio no Cloudflare (e é o que libera o telão no Discord).</p></div>
+      </div>
+      <h3>Configurar o "Meu domínio"</h3>
+      <ol class="passos">
+        <li>Em <b>dash.cloudflare.com → Networking → Tunnels → Create a tunnel</b>, copie o <b>token</b> do comando de instalação (não precisa rodar o comando).</li>
+        <li>Em <b>Routes → Add route → Published application</b>, aponte o subdomínio para o Service URL <code>http://localhost:8790</code>.</li>
+        <li>No painel: aba <b>Técnico → Link público → Meu domínio</b>, cole o endereço e o token. Ao conectar, o jogo confere se o endereço chega mesmo nele e avisa se a rota estiver errada.</li>
+      </ol>
+    </section>
+
+    <section id="letras" data-k="letra spicy lyrics chave sl_sk netease lrclib fontes">
+      <h2><span class="ico-box"><i data-ic="microfone"></i></span> Fontes da letra <span class="badge">opcional</span></h2>
+      <p>A letra aparece só quando não entrega resposta. Sem configurar nada, o jogo já usa o <b>LRCLIB</b> (por linha). Para palavra por palavra:</p>
+      <ul>
+        <li><b>Spicy Lyrics</b> (oficial, sílaba por sílaba): crie uma aplicação em <a href="https://developers.spicylyrics.org" target="_blank" rel="noopener">developers.spicylyrics.org</a> e cole a chave secreta (<code>sl_sk_…</code>) na aba <b>Técnico</b>. Precisa do id da faixa: no Linux vem do MPRIS; no Windows, da conta do Spotify conectada.</li>
+        <li><b>NetEase</b>: ligue "Procurar também na NetEase" (não oficial).</li>
+      </ul>
+    </section>
+
+    <section id="discord" data-k="discord atividade activity developer portal url mappings guild install">
+      <h2><span class="ico-box"><i class="bi" style="--i:url(assets/icons/discord.svg)"></i></span> Telão no Discord <span class="badge">opcional</span></h2>
+      <p>Precisa do <a href="#publico">link público com o seu domínio</a>. Depois, uma vez só:</p>
+      <ul class="check" data-grupo="discord">
+        <li data-id="dc-app"><a href="https://discord.com/developers/applications" target="_blank" rel="noopener">discord.com/developers/applications</a> → <b>New Application</b>.</li>
+        <li data-id="dc-act"><b>Activities → Settings</b>: ligue <b>Enable Activities</b>.</li>
+        <li data-id="dc-map"><b>Activities → URL Mappings</b>: Prefix <code>/</code> → Target <code>jockie.seudominio.com</code> (sem <code>https://</code>; o painel mostra o seu).</li>
+        <li data-id="dc-inst"><b>Installation</b>: marque <b>Guild Install</b> e <b>User Install</b>; abra o <b>Install Link</b> e adicione ao servidor.</li>
+        <li data-id="dc-call">Numa call: <b>Atividades</b> (o foguete) → o seu app.</li>
+      </ul>
+      <p class="muted">Como funciona: o Discord abre a página com <code>?frame_id=…</code>, o site vira telão e chama o servidor pelo prefixo <code>/.proxy</code>. As fontes vêm do próprio jogo: dentro do Discord nada de fora carrega.</p>
+    </section>
+
+    <section id="android" data-k="android apk controle celular instalar 8790 download chave assinatura backup">
+      <h2><span class="ico-box"><i data-ic="vibrar"></i></span> Controle Android <span class="badge">opcional</span></h2>
+      <p>O painel do host no celular, com vibração a cada palpite. A câmera do celular (Android ou iPhone) também abre o painel no navegador, sem app.</p>
+      <ul class="check" data-grupo="android">
+        <li data-id="an-apk">No celular, abra <code>http://&lt;IP do PC&gt;:8790/download/controle.apk</code> (o card mostra o endereço) ou <a href="baixar.html">baixe aqui</a>.</li>
+        <li data-id="an-qr">No PC, aba <b>Links</b> → <b>Controlar pelo celular → Mostrar QR code</b> e escaneie pelo app. O código vale 2 minutos e uma vez só.</li>
+      </ul>
+      <div class="callout aviso"><b>Para quem compila</b> <code>npm run build:android</code> (JDK 17 e Android SDK). A chave de assinatura fica na pasta de dados do app, em <code>android/</code>: <b>faça backup</b>, sem ela uma versão nova não instala por cima.</div>
+    </section>
+
+    <section id="festa" data-k="checklist festa antes de jogar telão qr spotify aberto">
+      <h2><span class="ico-box hot"><i data-ic="festa"></i></span> Checklist da festa</h2>
+      <ul class="check" data-grupo="festa">
+        <li data-id="f-spotify">Spotify aberto no PC (e a playlist carregada, se for no automático).</li>
+        <li data-id="f-modo">Modo do som certo: <b>Todos juntos</b> (caixa de som) ou <b>À distância</b> (link público).</li>
+        <li data-id="f-som">Na aba Som, o que vai no som está em <b>Spotify</b> (sem as vozes do Discord).</li>
+        <li data-id="f-telao">Telão aberto no segundo monitor, TV ou OBS (clique uma vez nele, no navegador, para a onda seguir o som).</li>
+        <li data-id="f-regras">Regras conferidas: campos, pontos, times, rodadas especiais.</li>
+        <li data-id="f-qr">QR code na tela e galera entrando.</li>
+        <li data-id="f-celular">Celular do host pareado para comandar do sofá (opcional).</li>
+      </ul>
+    </section>
+
+    <section id="dados" data-k="dados appdata config pasta placar regras som tocadas capas letras hall json">
+      <h2><span class="ico-box"><i data-ic="caixa"></i></span> Onde ficam os dados</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Jeito</th><th>Pasta</th></tr></thead>
+        <tbody>
+          <tr><td>App no Windows</td><td><code>%APPDATA%\JockieGuessr</code></td></tr>
+          <tr><td>App no Linux</td><td><code>~/.config/JockieGuessr</code></td></tr>
+          <tr><td>Terminal</td><td><code>data/</code>, na pasta do projeto</td></tr>
+        </tbody>
+      </table></div>
+      <p>Lá ficam o placar, as regras, o som, a música de espera, as músicas já tocadas, o hall da fama, o cache de capas e letras, e os segredos (token do túnel, conta do Spotify, chave da Spicy). Os segredos nunca vão para página nenhuma.</p>
+    </section>
+
+  </article>
+</div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+      <p>Quiz musical com telão, feito pelo Pulzi para jogar com os amigos.</p>
+      <p class="sig">Este site foi feito pelo <span>Claude Code</span>, do jeito dele. ✦</p>
+    </div>
+    <div><h4>Lado A</h4><ul><li><a href="index.html#como">Como funciona</a></li><li><a href="index.html#corretor">Teste o corretor</a></li><li><a href="index.html#especiais">Rodadas especiais</a></li><li><a href="index.html#pontos">Quanto vale</a></li></ul></div>
+    <div><h4>Lado B</h4><ul><li><a href="manual.html">Manual</a></li><li><a href="host.html">Guia do host</a></li><li><a href="novidades.html">Novidades</a></li><li><a href="baixar.html">Baixar</a></li></ul></div>
+    <div><h4>Créditos</h4><ul><li><a href="https://lucide.dev" target="_blank" rel="noopener">Ícones: Lucide</a></li><li><a href="https://simpleicons.org" target="_blank" rel="noopener">Marcas: Simple Icons</a></li><li><a href="https://lrclib.net" target="_blank" rel="noopener">Letras: LRCLIB</a></li><li><a href="https://spicylyrics.org" target="_blank" rel="noopener">Letras: Spicy Lyrics</a></li></ul></div>
+  </div>
+  <div class="foot-bar">JockieGuessr · <span data-versao>v1.3.0</span> · 33⅓ rpm</div>
+</footer>
+
+<script src="downloads-data.js"></script>
+<script src="icones.js"></script>
+<script src="doc.js"></script>
+<script src="host.js"></script>
+<script src="cursor.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>

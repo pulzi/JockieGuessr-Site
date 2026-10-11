@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JockieGuessr · o quiz musical da sua galera</title>
+<meta name="description" content="Quiz musical com telão: você toca no Spotify, a galera adivinha pelo celular (música, artista e álbum) e o telão revela com a capa, os pontos e o pódio. Juntos na sala ou cada um na sua casa.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,500&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="transition.css">
+<link rel="stylesheet" href="home.css">
+<meta name="theme-color" content="#14120f">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JockieGuessr">
+<meta property="og:title" content="JockieGuessr · o quiz musical da sua galera">
+<meta property="og:description" content="Você dá o play. A galera chuta pelo celular. O telão revela.">
+<script>try{var p=sessionStorage.getItem('pt');if(p){sessionStorage.removeItem('pt');p=JSON.parse(p);document.documentElement.classList.add('pt-in','pt-p-'+p.p,'pt-d-'+p.d)}}catch(e){}</script>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+  <nav>
+    <a href="index.html" class="on">Início</a>
+    <a href="manual.html">Manual</a>
+    <a href="host.html">Host</a>
+    <a href="novidades.html">Novidades</a>
+  </nav>
+  <a class="btn sm" href="baixar.html"><i data-ic="baixar"></i> Baixar</a>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><i data-ic="menu"></i></button>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div>
+    <a class="kicker" href="novidades.html" data-cursor="novidades"><span class="vinil gira"></span> <span><b data-versao>v1.2.0</b> · rodadas especiais, roleta e times</span> <i data-ic="avancar"></i></a>
+    <h1>Você dá o play.<span class="linha2">A galera <span class="tag-hl">chuta</span>.</span></h1>
+    <p class="lead">O quiz musical para jogar com os amigos. Você toca no <b>Spotify</b>, todo mundo palpita pelo <b>celular</b> (música, artista e álbum) e o <b>telão</b> revela com a capa, os pontos e o pódio. Na mesma sala ou cada um na sua casa.</p>
+    <div class="cta">
+      <a class="btn" href="baixar.html"><i data-ic="baixar"></i> Baixar o app do host</a>
+      <a class="btn ghost" href="manual.html">Como jogar <i data-ic="avancar"></i></a>
+    </div>
+    <ul class="pills">
+      <li><i class="bi" style="--i:url(assets/icons/windows.svg)"></i>Windows</li>
+      <li><i class="bi" style="--i:url(assets/icons/linux.svg)"></i>Linux</li>
+      <li><i data-ic="celular"></i>Celular, pelo navegador</li>
+      <li><i class="bi" style="--i:url(assets/icons/spotify.svg)"></i>Spotify</li>
+      <li><i class="bi" style="--i:url(assets/icons/discord.svg)"></i>Discord</li>
+    </ul>
+  </div>
+
+  <!-- Palco: um telão e um celular jogando sozinhos (com reações de verdade) -->
+  <div class="stage" aria-label="Demonstração de uma rodada">
+    <div class="tv">
+      <div class="tv-frame">
+        <div class="tv-screen" id="tv" data-fase="abertos">
+          <div class="tv-top">
+            <span class="chip" id="tvRodada">Rodada 3 de 10</span>
+            <span class="chip hot" id="tvFase">Palpites abertos</span>
+            <span class="grow"></span>
+            <span class="tv-qr" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          </div>
+          <div class="tv-mid"><small>Qual é a música?</small><b id="tvConta">Valendo!</b></div>
+          <canvas class="tv-wave" id="tvWave"></canvas>
+          <div class="tv-timer"><i id="tvTimer"></i></div>
+          <div class="tv-players" id="tvPlayers"></div>
+
+          <div class="tv-reveal">
+            <div class="capa-wrap"><div class="disco"></div><div class="capa" id="capa"><span id="capaTxt">Lado B</span></div></div>
+            <div class="rev-txt">
+              <small id="revTipo">Álbum · Lado B</small>
+              <h4 id="revTitulo">Fita Cassete</h4>
+              <p id="revArtista">Lua Laranja</p>
+              <div class="rev-list" id="revList"></div>
+            </div>
+          </div>
+          <div class="tv-stamp"><b>Palpites fechados!</b></div>
+          <div class="tv-scene"><div class="cena-disco"><b id="cenaN">4</b></div><div class="cena-txt" id="cenaTxt">Rodada</div></div>
+          <div class="tv-fly" id="tvFly"></div>
+        </div>
+        <div class="tv-label"><span>Telão · segundo monitor, TV ou OBS</span><i></i></div>
+      </div>
+      <div class="tv-stand"></div>
+    </div>
+
+    <div class="phone">
+      <div class="ph-frame">
+        <div class="ph-screen" id="ph" data-fase="abertos">
+          <div class="ph-notch"></div>
+          <div class="ph-top"><span class="vinil"></span><b>Jockie<span>Guessr</span></b><span class="chip hot" id="phChip">ao vivo</span></div>
+          <div class="ph-wave" id="phWave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="ph-card">
+            <div class="ph-form">
+              <small id="phRodada">Rodada 3 · seu palpite</small>
+              <div class="ph-f"><span>Música</span><b class="ph-in" id="phTitle"></b></div>
+              <div class="ph-f"><span>Artista</span><b class="ph-in" id="phArtist"></b></div>
+              <div class="ph-segs" id="phSegs"><i>Single</i><i>Álbum</i><i>EP</i></div>
+              <div class="ph-send" id="phSend">Mandar palpite</div>
+            </div>
+            <div class="ph-res" id="phRes"></div>
+          </div>
+          <div class="ph-reacts" id="phReacts">
+            <button type="button" aria-label="Reagir com fogo" data-cursor="reagir">🔥</button><button type="button" aria-label="Reagir rindo" data-cursor="reagir">😂</button><button type="button" aria-label="Reagir surpreso" data-cursor="reagir">😱</button><button type="button" aria-label="Reagir chorando" data-cursor="reagir">😭</button><button type="button" aria-label="Reagir com palmas" data-cursor="reagir">👏</button><button type="button" aria-label="Reagir com caveira" data-cursor="reagir">💀</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="stage-hint"><span class="seta">↙</span> toque nos emojis: eles voam no telão</p>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track">
+  <span>Relâmpago <i></i> Heardle <i></i> Duelo <i></i> Roubo <i></i> Vale dobro <i></i> Só a letra <i></i> Complete a letra <i></i> Quem escolheu? <i></i> Mesmo artista <i></i> Vale triplo <i></i></span>
+  <span>Relâmpago <i></i> Heardle <i></i> Duelo <i></i> Roubo <i></i> Vale dobro <i></i> Só a letra <i></i> Complete a letra <i></i> Quem escolheu? <i></i> Mesmo artista <i></i> Vale triplo <i></i></span>
+</div></div>
+<div class="ticker dark" aria-hidden="true"><div class="ticker-track">
+  <span>Sem instalar nada <i></i> Entra pelo QR code <i></i> Telão com a capa <i></i> Letra palavra por palavra <i></i> Times <i></i> Modo automático <i></i> Hall da fama <i></i></span>
+  <span>Sem instalar nada <i></i> Entra pelo QR code <i></i> Telão com a capa <i></i> Letra palavra por palavra <i></i> Times <i></i> Modo automático <i></i> Hall da fama <i></i></span>
+</div></div>
+
+<!-- ============ NÚMEROS ============ -->
+<section class="sec" style="padding-top:80px">
+  <div class="wrap">
+    <div class="stats" data-rv>
+      <div><b data-conta="0">0</b><span>apps para quem joga instalar: é o navegador do celular</span></div>
+      <div><b data-conta="10">10</b><span>tipos de rodada especial, com roleta no telão</span></div>
+      <div><b data-conta="3">3</b><span>fontes de letra sincronizada, palavra por palavra</span></div>
+      <div><b>2<small>a</small>4</b><span>times, com placar pela soma ou pela média</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1: COMO FUNCIONA ============ -->
+<section class="sec" id="como">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="faixa"><b>A1</b> Como funciona <i>· 0:45</i></p>
+      <h2>Uma rodada em <span class="tag-hl">quatro</span> tempos.</h2>
+      <p>O host comanda pelo painel (ou deixa no automático). Quem joga só precisa de um celular e de um nome.</p>
+    </div>
+    <ol class="steps">
+      <li>
+        <span class="n">01</span>
+        <div class="mini"><div class="mini-play"><span class="vinil gira"></span><i data-ic="play"></i></div></div>
+        <h3>Toca a música</h3>
+        <p>Você dá o play no Spotify do PC. No automático, o jogo escolhe a faixa da playlist e até o trecho.</p>
+      </li>
+      <li>
+        <span class="n">02</span>
+        <div class="mini"><div class="mini-qr"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <h3>A galera entra pelo QR</h3>
+        <p>O QR code fica no telão. Aponta a câmera, digita um nome e pronto: nada para instalar.</p>
+      </li>
+      <li>
+        <span class="n">03</span>
+        <div class="mini"><div class="mini-form"><span>Música <b>✓</b></span><span>Artista <b>~</b></span><span>Álbum <b>✗</b></span></div></div>
+        <h3>Todo mundo chuta</h3>
+        <p>Música, artista, se é single, álbum ou EP (e qual álbum). O corretor sugere certo, parcial ou errado e você confere.</p>
+      </li>
+      <li>
+        <span class="n">04</span>
+        <div class="mini"><div class="mini-pod"><i>2</i><i>1</i><i>3</i></div></div>
+        <h3>O telão revela</h3>
+        <p>A capa com o vinil saindo de trás, os palpites de cada um, o bônus de rapidez e, no fim, o pódio com confete.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ A2: TRÊS TELAS ============ -->
+<section class="sec" id="telas">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="faixa"><b>A2</b> Três telas, um jogo <i>· 1:20</i></p>
+      <h2>Cada um com a <span class="tag-hl gold">sua tela</span>.</h2>
+      <p>O mesmo servidor serve o celular de quem joga, o telão e o painel de quem comanda. Tudo conversa em tempo real.</p>
+    </div>
+    <div class="bento">
+      <article class="card b-player">
+        <div class="ico-box hot"><i data-ic="celular"></i></div>
+        <h3>Quem joga</h3>
+        <p>Abre no navegador do celular ou do PC. Escuta, palpita, reage com emojis e vê o resultado na hora. Na primeira vez, um tutorial de 4 telas.</p>
+        <div class="mini-phone" aria-hidden="true"><div><span class="on"></span><span></span><span></span><em></em></div></div>
+      </article>
+      <article class="card b-telao">
+        <div class="ico-box gold"><i data-ic="telao"></i></div>
+        <h3>Telão</h3>
+        <p>Só exibe, sem botões: QR code para entrar, a onda seguindo o som, contagem, quem já palpitou, a revelação com a capa, a roleta e o pódio. Vai no segundo monitor, na TV, no OBS ou numa call do Discord.</p>
+      </article>
+      <article class="card b-host">
+        <div class="ico-box cream"><i data-ic="engrenagem"></i></div>
+        <h3>Painel do host</h3>
+        <p>Nove abas, do jogo para o técnico. Tudo o que você muda fica salvo.</p>
+        <div class="abas"><span>Rodada</span><span>Automático</span><span>Placar</span><span>Regras</span><span>Avançado</span><span>Som</span><span>Links</span><span>Técnico</span><span>Telão</span></div>
+      </article>
+      <article class="card b-app">
+        <div class="ico-box"><i data-ic="disco"></i></div>
+        <h3>App do host</h3>
+        <p>Dois cliques no <code>.exe</code> (ou no AppImage, no Linux): liga o jogo, o som e o túnel, e abre o painel já logado. Com dois monitores, o telão vai sozinho para o segundo.</p>
+      </article>
+      <article class="card b-ctrl">
+        <div class="ico-box"><i data-ic="vibrar"></i></div>
+        <h3>Controle no celular</h3>
+        <p>O painel inteiro no seu celular, por um QR de uso único (vale 2 minutos). O app Android ainda vibra a cada palpite.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A3: TESTE O CORRETOR ============ -->
+<section class="sec" id="corretor">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="faixa"><b>A3</b> Teste o corretor <i>· 2:10</i></p>
+      <h2>Errou uma letra? <span class="tag-hl">Vale metade.</span></h2>
+      <p>Maiúsculas, acentos, "(feat. …)", "The" no começo e "- Remastered 2011" não contam. Erro de digitação, só um pedaço do nome ou só um dos artistas viram <b>parcial</b>. Esta caixa roda o <b>mesmo corretor</b> do jogo: escreva e veja.</p>
+    </div>
+    <div class="corr">
+      <div class="sleeve" data-rv>
+        <h3>A resposta certa</h3>
+        <div class="presets" id="presets"></div>
+        <label class="resp-f"><span>Música</span><input id="rTitle" autocomplete="off" spellcheck="false"></label>
+        <label class="resp-f"><span>Artista</span><input id="rArtist" autocomplete="off" spellcheck="false"></label>
+        <div class="resp-f"><span>Tipo</span><div class="segs" id="rKind"><button type="button" data-k="single">Single</button><button type="button" data-k="album">Álbum</button><button type="button" data-k="ep">EP</button></div></div>
+        <label class="resp-f" id="rAlbumWrap"><span>Álbum</span><input id="rAlbum" autocomplete="off" spellcheck="false"></label>
+        <p class="dica-s">No jogo, isto se preenche sozinho com o que está tocando no Spotify. Dá para editar aqui e testar com qualquer música.</p>
+      </div>
+      <div class="palp" data-rv>
+        <h3>O seu palpite</h3>
+        <div class="pf"><label><span>Música</span><input id="gTitle" placeholder="o nome da música" autocomplete="off" spellcheck="false"></label><div class="res-badge" id="bTitle"></div></div>
+        <div class="pf"><label><span>Artista</span><input id="gArtist" placeholder="quem canta" autocomplete="off" spellcheck="false"></label><div class="res-badge" id="bArtist"></div></div>
+        <div class="pf"><div class="cg"><span style="font:800 .7rem var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px">Single, álbum ou EP?</span><div class="segs" id="gKind"><button type="button" data-k="single">Single</button><button type="button" data-k="album">Álbum</button><button type="button" data-k="ep">EP</button></div></div><div class="res-badge" id="bKind"></div></div>
+        <div class="pf" id="gAlbumWrap"><label><span>Álbum <small style="text-transform:none;letter-spacing:0;font-weight:500">(opcional)</small></span><input id="gAlbum" placeholder="qual álbum" autocomplete="off" spellcheck="false"></label><div class="res-badge" id="bAlbum"></div></div>
+        <div class="tente" id="tente"><span>Experimente:</span></div>
+        <div class="palp-total"><span>Pontos nesta rodada (regras padrão, sem bônus)</span><b id="gTotal">0</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A4: RODADAS ESPECIAIS ============ -->
+<section class="sec" id="especiais">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="faixa"><b>A4</b> Rodadas especiais <i>· 3:05</i></p>
+      <h2>Gira a <span class="tag-hl gold">roleta</span>.</h2>
+      <p>Para a partida não ficar sempre igual: o host escolhe uma rodada especial ou gira a roleta, que roda no telão e para numa delas. No automático, sai uma a cada 4 rodadas (dá para mudar).</p>
+    </div>
+    <div class="roleta">
+      <div class="roda-wrap">
+        <div class="agulha" id="agulha"></div>
+        <div class="roda" id="roda"></div>
+        <button class="roda-centro" id="girar" type="button" data-cursor="girar!">Girar<span>a roleta</span></button>
+      </div>
+      <div>
+        <div class="esp-card" id="espCard"></div>
+        <div class="esp-chips" id="espChips"></div>
+        <p class="note">Os números de cada uma (segundos, pontos, multiplicador) e o que pode sair na roleta ficam na aba <b>Avançado</b> do painel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A5: QUANTO VALE ============ -->
+<section class="sec" id="pontos">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="faixa"><b>A5</b> Quanto vale <i>· 3:50</i></p>
+      <h2>Faça a <span class="tag-hl cream">conta</span>.</h2>
+      <p>Os pontos padrão, com o bônus de rapidez, a aposta "tenho certeza", a sequência de acertos e a rodada que vale dobro. Mexa e veja o cupom. Tudo isso é editável na aba <b>Regras</b>.</p>
+    </div>
+    <div class="calc">
+      <div class="calc-ctrl" data-rv>
+        <div class="cg"><span>A música é</span><div class="segs" id="cKind"><button type="button" data-k="single">Single</button><button type="button" data-k="album" class="on">Álbum</button><button type="button" data-k="ep">EP</button></div></div>
+        <div class="cg"><span>O seu palpite</span><div class="campos-calc" id="cCampos"></div></div>
+        <div class="cg"><span>Rapidez (entre quem acertou música e artista)</span><div class="segs" id="cVel"><button type="button" data-v="0" class="on">1º</button><button type="button" data-v="1">2º</button><button type="button" data-v="2">3º</button><button type="button" data-v="3">Depois</button></div></div>
+        <div class="extras-calc">
+          <label class="toggle"><input type="checkbox" id="cAposta"><span>🎯 Tenho certeza<small>acertou: os campos dobram; errou: −2</small></span></label>
+          <div class="cg" style="margin:0"><span>🔥 Rodadas seguidas antes desta</span><div class="stepper"><button type="button" id="seqMenos" aria-label="Menos">−</button><output id="cSeq">2</output><button type="button" id="seqMais" aria-label="Mais">+</button></div></div>
+        </div>
+        <div class="cg"><span>Rodada</span><div class="segs" id="cMult"><button type="button" data-m="1" class="on">Normal</button><button type="button" data-m="2">Vale dobro</button><button type="button" data-m="3">Vale triplo</button></div></div>
+      </div>
+      <div class="cupom" id="cupom" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A6: JUNTOS OU À DISTÂNCIA ============ -->
+<section class="sec" id="modos">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="faixa"><b>A6</b> Juntos ou à distância <i>· 4:30</i></p>
+      <h2>Na sala ou cada um <span class="tag-hl">na sua casa</span>.</h2>
+      <p>O jogo captura o som do PC (só o Spotify, sem as vozes do Discord) e manda para quem precisa ouvir. Troca na aba Som, a qualquer hora.</p>
+    </div>
+    <div class="modos-sw" role="tablist" aria-label="Onde a galera está">
+      <button type="button" role="tab" data-modo="juntos" class="on"><i data-ic="casa"></i> Todos juntos</button>
+      <button type="button" role="tab" data-modo="distancia"><i data-ic="mundo"></i> À distância</button>
+    </div>
+    <div class="modo" id="modo"></div>
+  </div>
+</section>
+
+<!-- ============ A7: LETRA ============ -->
+<section class="sec" id="letra">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="faixa"><b>A7</b> Letra palavra por palavra <i>· 5:15</i></p>
+      <h2>Karaokê <span class="tag-hl gold">sem spoiler</span>.</h2>
+      <p>Cada palavra se enche enquanto é cantada e a da vez brilha. Voz de fundo menor, dueto do outro lado, discos girando nos solos e as cores da capa atrás. Ela só aparece quando não entrega nada: na música de espera ou depois da revelação.</p>
+    </div>
+    <div class="karaoke" data-rv>
+      <div class="k-top"><div class="k-capa"></div><div><b>Fita Cassete</b><span>Lua Laranja · uma música inventada para esta demo</span></div><span class="chip hot">Tocando agora</span></div>
+      <div class="k-linhas" id="kLinhas"></div>
+      <div class="k-cred"><span>Letra: escrita para esta página · sincronizada palavra por palavra</span><span>No jogo: Spicy Lyrics, NetEase ou LRCLIB, com o crédito de quem sincronizou</span></div>
+    </div>
+    <div class="fontes">
+      <article class="card"><h3><b>1</b> Spicy Lyrics</h3><p>Oficial, sílaba por sílaba. Precisa de uma chave e do id da faixa.</p></article>
+      <article class="card"><h3><b>2</b> NetEase</h3><p>Opcional e não oficial, com o tempo de cada palavra.</p></article>
+      <article class="card"><h3><b>3</b> LRCLIB</h3><p>Base aberta, por linha: o jogo estima o tempo de cada palavra.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LADO B ============ -->
+<section class="sec" id="lado-b">
+  <div class="wrap">
+    <div class="lado-b-head">
+      <span class="vinil grande" aria-hidden="true"></span>
+      <div class="sec-head" style="margin:0">
+        <p class="faixa"><b>B</b> Vire o disco</p>
+        <h2>E ainda tem o <span class="tag-hl cream">Lado B</span>.</h2>
+      </div>
+    </div>
+    <div class="feat">
+      <article class="card"><span class="faixinha">B1</span><div class="ico-box hot"><i data-ic="robo"></i></div><h3>Modo automático</h3><p>Cole uma playlist do Spotify e o jogo roda sozinho: troca a música, abre e fecha os palpites, revela e segue. Padrão: 10 rodadas de 30 s, sem repetir música.</p></article>
+      <article class="card"><span class="faixinha">B2</span><div class="ico-box gold"><i data-ic="times"></i></div><h3>Times</h3><p>De 2 a 4, com nome e cor. Placar pela soma ou pela média (justo com times de tamanhos diferentes). Sorteio equilibrado e troca pelo celular.</p></article>
+      <article class="card"><span class="faixinha">B3</span><div class="ico-box cream"><i data-ic="playlist"></i></div><h3>Playlist dos jogadores</h3><p>Cada um escolhe até 3 músicas no celular, sem os outros verem. Quando toca a sua, "Essa é sua!": se ninguém acertar, você ganha +3.</p></article>
+      <article class="card"><span class="faixinha">B4</span><div class="ico-box"><i data-ic="fogo"></i></div><h3>Sequência, aposta e intro</h3><p>🔥 a partir da 3ª rodada seguida acertando, +1. 🎯 3 apostas "tenho certeza" por jogo. E o modo intro, que toca só os primeiros segundos.</p></article>
+      <article class="card"><span class="faixinha">B5</span><div class="ico-box"><i data-ic="trofeu"></i></div><h3>Resumo e hall da fama</h3><p>No fim: o mais rápido, a maior sequência, a rodada mais gorda e a música que ninguém acertou. Os recordes ficam guardados entre partidas.</p></article>
+      <article class="card"><span class="faixinha">B6</span><div class="ico-box"><i data-ic="fone"></i></div><h3>Música de espera</h3><p>Uma playlist só para o lobby, com "tocando agora" no telão e nos celulares. Faixas que também estão no jogo são puladas, para não entregar resposta.</p></article>
+      <article class="card"><span class="faixinha">B7</span><div class="ico-box"><i class="bi" style="--i:url(assets/icons/discord.svg)"></i></div><h3>Telão no Discord</h3><p>O telão abre como Atividade dentro de uma call: todo mundo vê o jogo e pode tocar em "Ouvir aqui". Sem vídeo, então nada de suspensão.</p></article>
+      <article class="card"><span class="faixinha">B8</span><div class="ico-box"><i data-ic="album"></i></div><h3>Capa e "agora tocando"</h3><p>O jogo lê o que o Spotify está tocando e completa com o tipo e a capa grande. A capa só chega no celular na revelação, com endereço assinado.</p></article>
+      <article class="card"><span class="faixinha">B9</span><div class="ico-box"><i data-ic="reacao"></i></div><h3>Reações</h3><p>🔥 😂 😱 😭 👏 💀 embaixo da onda, no celular. Voam pelo telão com o nome de quem mandou (com um limite, para ninguém floodar).</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAMADA PARA O HOST ============ -->
+<section class="sec">
+  <div class="wrap">
+    <a class="host-cta" href="host.html" data-cursor="bora!">
+      <span class="hc-disco" aria-hidden="true"></span>
+      <div>
+        <span class="hc-kicker">Para quem vai comandar</span>
+        <h2>Vai ser o DJ da noite?</h2>
+        <p>O guia do host tem o passo a passo do Windows, do Linux e do terminal, com checklist, gerador de <code>.env</code>, a conta do Spotify, o link público e o telão no Discord.</p>
+        <ul class="hc-points"><li>Sem abrir porta no roteador</li><li>Seu volume nunca é mexido</li><li>Senha fica no seu PC</li></ul>
+      </div>
+      <span class="btn">Ver o guia do host <i data-ic="avancar"></i></span>
+    </a>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="faixa"><b>B10</b> Dúvidas comuns <i>· faixa escondida</i></p>
+      <h2>Perguntas que <span class="tag-hl">sempre</span> aparecem.</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Quem joga precisa instalar alguma coisa?</summary><p>Não. Aponta a câmera para o QR code do telão, abre no navegador (Android, iPhone ou PC), digita um nome e pronto. Só quem hospeda roda o app (ou o servidor pelo terminal).</p></details>
+      <details><summary>Precisa de Spotify Premium?</summary><p>Para jogar na mão, não: você só dá o play. No modo automático, com uma conta Premium conectada, o jogo escolhe a faixa exata e até o trecho. Sem conta, ele liga o aleatório e pula até cair numa música da playlist.</p></details>
+      <details><summary>Dá para jogar cada um na sua casa?</summary><p>Sim, no modo <b>À distância</b>: o som vai para o celular de cada um, por um link público (um túnel do Cloudflare). O PC precisa do <code>cloudflared</code>. Também dá para abrir o telão numa call do Discord.</p></details>
+      <details><summary>O Windows disse "editor desconhecido". É vírus?</summary><p>Não. O <code>.exe</code> não é assinado (certificado custa caro), então o SmartScreen avisa na primeira vez. Clique em <b>Mais informações → Executar assim mesmo</b>.</p></details>
+      <details><summary>Funciona no Linux?</summary><p>Funciona: o som sai pelo PipeWire e o "agora tocando" pelo MPRIS, com o mesmo app empacotado em AppImage. Ou rode pelo terminal com <code>npm start</code>.</p></details>
+      <details><summary>O jogo mexe no meu volume?</summary><p>Nunca. Ele pode tocar, pausar e trocar de faixa no Spotify (no automático e nas rodadas especiais), mas não chama o controle de volume.</p></details>
+      <details><summary>Errei a avaliação de alguém. Dá para corrigir?</summary><p>Dá, mesmo depois do resultado: o placar (e o bônus de rapidez) se ajusta pela diferença.</p></details>
+      <details><summary>Alguém fechou a página sem querer. Perdeu os pontos?</summary><p>Não. Quem sai some das listas depois de 30 s; se voltar pelo mesmo aparelho, os pontos voltam junto.</p></details>
+    </div>
+    <p class="note">Quer tudo em detalhe? <a href="manual.html">Abra o manual</a>.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+      <p>Quiz musical com telão, feito pelo Pulzi para jogar com os amigos.</p>
+      <p class="sig">Este site foi feito pelo <span>Claude Code</span>, do jeito dele. ✦</p>
+    </div>
+    <div><h4>Lado A</h4><ul><li><a href="index.html#como">Como funciona</a></li><li><a href="index.html#corretor">Teste o corretor</a></li><li><a href="index.html#especiais">Rodadas especiais</a></li><li><a href="index.html#pontos">Quanto vale</a></li></ul></div>
+    <div><h4>Lado B</h4><ul><li><a href="manual.html">Manual</a></li><li><a href="host.html">Guia do host</a></li><li><a href="novidades.html">Novidades</a></li><li><a href="baixar.html">Baixar</a></li></ul></div>
+    <div><h4>Créditos</h4><ul><li><a href="https://lucide.dev" target="_blank" rel="noopener">Ícones: Lucide</a></li><li><a href="https://simpleicons.org" target="_blank" rel="noopener">Marcas: Simple Icons</a></li><li><a href="https://lrclib.net" target="_blank" rel="noopener">Letras: LRCLIB</a></li><li><a href="https://spicylyrics.org" target="_blank" rel="noopener">Letras: Spicy Lyrics</a></li></ul></div>
+  </div>
+  <div class="foot-bar">JockieGuessr · <span data-versao>v1.2.0</span> · 33⅓ rpm</div>
+</footer>
+
+<script src="downloads-data.js"></script>
+<script src="icones.js"></script>
+<script src="corretor.js"></script>
+<script src="home.js"></script>
+<script src="cursor.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>

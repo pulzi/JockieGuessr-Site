@@ -1,0 +1,58 @@
+/* Novidades: cada versão é um disco na prateleira; o changelog vem do CHANGELOG.md */
+.cl { max-width: 1180px; margin: 0 auto; padding: 36px 16px 0; }
+.cl-bar { display: grid; gap: 14px; margin-bottom: 30px; }
+.cl-bar .search { max-width: 460px; }
+.cl-areas { display: flex; flex-wrap: wrap; gap: 7px; }
+.cl-areas button { display: inline-flex; align-items: center; gap: 6px; font: 700 .82rem var(--body); padding: 7px 12px; border-radius: 7px; border: 2px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; transition: .15s; }
+.cl-areas button span { font: 700 .7rem var(--mono); color: var(--dim); }
+.cl-areas button:hover { color: var(--text); }
+.cl-areas button.on { background: var(--accent); color: var(--on-accent); border-color: #000; box-shadow: 2px 2px 0 #000; }
+.cl-areas button.on span { color: var(--on-accent); }
+
+.cl-layout { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 40px; align-items: start; }
+.cl-discos { position: sticky; top: 90px; display: grid; gap: 12px; }
+.cl-discos a { display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 8px; border-radius: 10px; border: 2px solid transparent; transition: .15s; }
+.cl-discos a:hover { background: var(--card); border-color: var(--line); }
+.cl-discos a .vinil { width: 44px; height: 44px; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+.cl-discos a:hover .vinil { transform: rotate(200deg); }
+.cl-discos a b { display: block; font: 800 1.05rem var(--display); }
+.cl-discos a span { font-size: .78rem; color: var(--muted); }
+.cl-discos a.atual .vinil { background: radial-gradient(circle, var(--bg) 0 7%, var(--gold) 8% 31%, #000 32% 33.5%, transparent 34%), repeating-radial-gradient(circle, #121212 0 2px, #202020 2px 3.5px); }
+
+.timeline { list-style: none; padding: 0; margin: 0; display: grid; gap: 28px; }
+.ver { background: var(--card); border: 2px solid var(--line); border-radius: 12px; box-shadow: 6px 6px 0 #000; overflow: hidden; scroll-margin-top: 90px; }
+.ver-capa { display: flex; align-items: center; gap: 18px; padding: 20px 22px; background: var(--card2); border-bottom: 2px solid var(--line); position: relative; overflow: hidden; }
+.ver-capa::after { content: ""; position: absolute; right: -60px; top: -60px; width: 180px; height: 180px; border-radius: 50%; background: repeating-radial-gradient(circle, #ffffff08 0 2px, transparent 2px 6px); }
+.ver-n { font: 800 2.4rem/1 var(--display); letter-spacing: -.03em; text-decoration: none; }
+.ver.atual .ver-n { color: var(--accent); }
+.ver.forno .ver-n { font-size: 1.6rem; }
+.ver-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.ver-meta time { font: 700 .78rem var(--mono); color: var(--muted); }
+.ver-resumo { margin: 0; padding: 18px 22px 4px; font: 600 1.06rem/1.5 var(--body); color: var(--text); }
+.ver-g { padding: 8px 22px 6px; }
+.ver-g h4 { margin: 10px 0 6px; font: 700 .76rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+.ver-g ul { margin: 0 0 6px; padding-left: 20px; }
+.ver-g li { color: #ddd3c3; margin: 5px 0; font-size: .95rem; }
+.ver-g li::marker { color: var(--accent); }
+.ver-g li code { font-size: .82em; }
+.ver-g li a { color: var(--gold); }
+.ver > :last-child { padding-bottom: 20px; }
+.ver.hide, .ver-g.hide { display: none; }
+
+.roadmap { margin-top: 110px; }
+.rm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.rm-grid .card h3 { margin: 16px 0 10px; font-size: 1.3rem; }
+.rm-grid ul, .rm-grid ol { margin: 0; padding-left: 20px; color: #ddd3c3; }
+.rm-grid li { margin: 6px 0; }
+.rm-grid li::marker { color: var(--accent); }
+.rm-grid p { color: #ddd3c3 !important; font-size: 1rem !important; }
+
+@media (max-width: 860px) {
+  .cl-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .cl-discos { position: static; display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+  .cl-discos a { flex: none; }
+  .rm-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .ver-capa { flex-wrap: wrap; gap: 10px; }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- a 404 abre em qualquer caminho: a base aponta para a raiz do site (no GitHub Pages, /<repositório>/) -->
+<script>document.write('<base href="'+(location.hostname.endsWith('github.io')?'/'+location.pathname.split('/')[1]+'/':'/')+'">')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faixa não encontrada · JockieGuessr</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,500;9..40,700;9..40,800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#14120f">
+<style>
+  .lost { min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 40px 16px; }
+  .riscado { position: relative; width: min(260px, 70vw); aspect-ratio: 1; margin: 0 auto 30px; }
+  .riscado .vinil { position: absolute; inset: 0; width: 100%; height: 100%; box-shadow: 0 0 0 4px #000, 10px 10px 0 #000; animation: engasga 1.6s steps(1) infinite; }
+  .riscado::after { content: ""; position: absolute; left: 18%; top: 40%; width: 64%; height: 3px; background: #f4ede1aa; transform: rotate(-24deg); border-radius: 3px; box-shadow: 0 0 10px #fff6; }
+  .riscado .braco { position: absolute; right: -14%; top: -6%; width: 12px; height: 62%; background: #d9d3c5; border: 3px solid #000; border-radius: 8px; transform-origin: top center; transform: rotate(22deg); animation: pula 1.6s infinite; }
+  @keyframes engasga { 0% { transform: rotate(0); } 25% { transform: rotate(40deg); } 50% { transform: rotate(40deg); } 75% { transform: rotate(80deg); } }
+  @keyframes pula { 0%, 100% { transform: rotate(22deg); } 30% { transform: rotate(14deg); } 34% { transform: rotate(22deg); } }
+  .code { font: 800 clamp(5rem, 20vw, 10rem)/1 var(--display); letter-spacing: -.05em; margin: 0; }
+  .lost p { color: var(--muted); max-width: 30em; margin: 12px auto 28px; font-size: 1.08rem; }
+  .lost .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<main class="lost">
+  <div>
+    <div class="riscado" aria-hidden="true"><span class="vinil"></span><span class="braco"></span></div>
+    <h1 class="code">4<span class="tag-hl">0</span>4</h1>
+    <p>O disco riscou e pulou essa faixa. Talvez o link esteja errado, ou ela nunca tenha existido.</p>
+    <div class="cta">
+      <a class="btn" href="index.html">Voltar para o lado A</a>
+      <a class="btn ghost" href="manual.html">Abrir o manual</a>
+    </div>
+  </div>
+</main>
+<script src="cursor.js"></script>
+</body>
+</html>

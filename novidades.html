@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novidades · JockieGuessr</title>
+<meta name="description" content="Tudo o que mudou em cada versão do JockieGuessr e o que vem por aí.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,500&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="transition.css">
+<link rel="stylesheet" href="doc.css">
+<link rel="stylesheet" href="novidades.css">
+<meta name="theme-color" content="#14120f">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JockieGuessr">
+<meta property="og:title" content="Novidades · JockieGuessr">
+<script>try{var p=sessionStorage.getItem('pt');if(p){sessionStorage.removeItem('pt');p=JSON.parse(p);document.documentElement.classList.add('pt-in','pt-p-'+p.p,'pt-d-'+p.d)}}catch(e){}</script>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="manual.html">Manual</a>
+    <a href="host.html">Host</a>
+    <a href="novidades.html" class="on">Novidades</a>
+  </nav>
+  <a class="btn sm" href="baixar.html"><i data-ic="baixar"></i> Baixar</a>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><i data-ic="menu"></i></button>
+</header>
+
+<main>
+<div class="doc-hero">
+  <p class="kicker"><span class="vinil gira"></span> Changelog · <span data-versao>v1.3.0</span></p>
+  <h1>A discografia <span class="tag-hl gold">completa</span>.</h1>
+  <p class="lead" id="resumo">Cada versão, da mais nova para a mais antiga.</p>
+</div>
+
+<div class="cl">
+  <div class="cl-bar">
+    <label class="search"><i data-ic="busca"></i><input id="q" type="search" placeholder="Buscar: roleta, linux, letra…" autocomplete="off" aria-label="Buscar nas versões"></label>
+    <div class="cl-areas" id="areas" role="group" aria-label="Filtrar por área"></div>
+  </div>
+
+  <div class="cl-layout">
+    <nav class="cl-discos" id="discos" aria-label="Versões"></nav>
+    <ol class="timeline" id="timeline"></ol>
+  </div>
+  <p class="no-results" id="vazio" hidden>Nenhuma versão com isso. Tente outra palavra.</p>
+
+  <section class="roadmap" id="roadmap">
+    <div class="sec-head">
+      <p class="faixa"><b>B</b> Próximo disco</p>
+      <h2>O que vem por <span class="tag-hl">aí</span>.</h2>
+    </div>
+    <div class="rm-grid">
+      <div class="card rm-prox"><div class="ico-box hot"><i data-ic="forno"></i></div><h3>No forno</h3><div id="rmProx"></div></div>
+      <div class="card rm-guard"><div class="ico-box cream"><i data-ic="lampada"></i></div><h3>Guardado (talvez um dia)</h3><ul id="rmGuard"></ul></div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <a class="brand" href="index.html"><span class="vinil"></span><b>Jockie<span>Guessr</span></b></a>
+      <p>Quiz musical com telão, feito pelo Pulzi para jogar com os amigos.</p>
+      <p class="sig">Este site foi feito pelo <span>Claude Code</span>, do jeito dele. ✦</p>
+    </div>
+    <div><h4>Lado A</h4><ul><li><a href="index.html#como">Como funciona</a></li><li><a href="index.html#corretor">Teste o corretor</a></li><li><a href="index.html#especiais">Rodadas especiais</a></li><li><a href="index.html#pontos">Quanto vale</a></li></ul></div>
+    <div><h4>Lado B</h4><ul><li><a href="manual.html">Manual</a></li><li><a href="host.html">Guia do host</a></li><li><a href="novidades.html">Novidades</a></li><li><a href="baixar.html">Baixar</a></li></ul></div>
+    <div><h4>Créditos</h4><ul><li><a href="https://lucide.dev" target="_blank" rel="noopener">Ícones: Lucide</a></li><li><a href="https://simpleicons.org" target="_blank" rel="noopener">Marcas: Simple Icons</a></li><li><a href="https://lrclib.net" target="_blank" rel="noopener">Letras: LRCLIB</a></li><li><a href="https://spicylyrics.org" target="_blank" rel="noopener">Letras: Spicy Lyrics</a></li></ul></div>
+  </div>
+  <div class="foot-bar">JockieGuessr · <span data-versao>v1.3.0</span> · 33⅓ rpm</div>
+</footer>
+
+<script src="downloads-data.js"></script>
+<script src="changelog-data.js"></script>
+<script src="icones.js"></script>
+<script src="novidades.js"></script>
+<script src="cursor.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>
